@@ -1,29 +1,29 @@
+// src/components/NavSubItem.tsx
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-const NavSubItem = ({
-  icon,
-  title,
-  href,
-  isActive,
-}: {
-  icon: React.ReactNode;
+interface NavSubItemProps {
   title: string;
   href: string;
-  isActive: boolean;
-}) => (
-  <li>
-    <Link href={href}>
-      <div
-        className={`flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 ${
-          isActive ? 'bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400'
+}
+
+const NavSubItem = ({ title, href }: NavSubItemProps) => {
+  const router = useRouter();
+  const isActive = router.pathname === href;
+
+  return (
+    <li>
+      <Link
+        href={href}
+        className={`block p-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md ${
+          isActive ? 'bg-gray-200 dark:bg-gray-700' : ''
         }`}
       >
-        <span className="h-4 w-4">{icon}</span>
-        <span className="ml-3">{title}</span>
-      </div>
-    </Link>
-  </li>
-);
+        {title}
+      </Link>
+    </li>
+  );
+};
 
 export default NavSubItem;

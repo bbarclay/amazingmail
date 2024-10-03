@@ -1,50 +1,61 @@
-import React, { useState } from 'react';
+// src/components/NavItem.tsx
+import React, { useState, ReactNode } from 'react';
 import Link from 'next/link';
 import { FiChevronDown } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
 
-const NavItem = ({
-  icon,
-  title,
-  href,
-  isActive,
-  isOpen,
-  children,
-}: {
-  icon: React.ReactNode;
+interface NavItemProps {
+  icon: ReactNode;
   title: string;
   href: string;
-  isActive: boolean;
+  children?: ReactNode;
   isOpen: boolean;
-  children?: React.ReactNode;
-}) => {
-  const [isSubmenuOpen, setIsSubmenuOpen] = useState(isActive);
+}
 
-  const hasChildren = React.Children.count(children) > 0;
+const NavItem = ({ icon, title, href, children, isOpen }: NavItemProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const router = useRouter();
+  const isActive = router.pathname === href;
+
+  const toggleExpand = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation(); // Prevent the default link behavior and event propagation
+    setIsExpanded(!isExpanded);
+  };
 
   return (
-    <li>
-      <button
-        onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
-        className={`flex items-center w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 ${
-          isActive ? 'bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
+    <li className="relative">
+      <div
+        className={`flex items-center p-2 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 rounded-md ${
+          isActive ? 'bg-gray-200 dark:bg-gray-700' : ''
         }`}
       >
-        <span className="h-5 w-5">{icon}</span>
-        {isOpen && (
-          <>
-            <span className="ml-3">{title}</span>
-            {hasChildren && (
-              <FiChevronDown
-                className={`ml-auto h-4 w-4 transform transition-transform duration-200 ${
-                  isSubmenuOpen ? 'rotate-180' : ''
-                }`}
-              />
-            )}
-          </>
+        {/* Navigation Link */}
+        <Link href={href} className="flex items-center flex-grow">
+          <span className="text-xl">{icon}</span>
+          {isOpen && <span className="ml-4">{title}</span>}
+        </Link>
+
+        {/* Submenu Toggle Button */}
+        {children && isOpen && (
+          <button
+            className="ml-auto focus:outline-none"
+            onClick={toggleExpand} // Toggle submenu
+          >
+            <FiChevronDown
+              className={`transition-transform duration-200 ${
+                isExpanded ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
         )}
-      </button>
-      {isOpen && hasChildren && isSubmenuOpen && (
-        <ul className="ml-8 mt-1 space-y-1">{children}</ul>
+      </div>
+
+      {/* Submenu Items */}
+      {children && isExpanded && isOpen && (
+        <ul className="ml-8 mt-2 space-y-1">
+          {children}
+        </ul>
       )}
     </li>
   );
