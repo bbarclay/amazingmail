@@ -2,15 +2,10 @@
 > amazing-dashboard@0.1.0 dev
 > next dev
 
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
   ▲ Next.js 14.2.14
-  - Local:        http://localhost:3000
+  - Local:        http://localhost:3002
 
  ✓ Starting...
-Attention: Next.js now collects completely anonymous telemetry regarding usage.
-This information is used to shape Next.js' roadmap and prioritize features.
-You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-https://nextjs.org/telemetry
-
-   Downloading swc package @next/swc-linux-x64-gnu...
-   Downloading swc package @next/swc-linux-x64-musl...
- ✓ Ready in 21s
+ ✓ Ready in 3.7s
