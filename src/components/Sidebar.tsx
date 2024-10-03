@@ -9,12 +9,15 @@ const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
   const [router, setRouter] = useState(null);
 
   useEffect(() => {
+    // Ensure the router is only set on the client-side
     setIsMounted(true);
-    setRouter(useRouter());
+    if (typeof window !== 'undefined') {
+      setRouter(useRouter());
+    }
   }, []);
 
   if (!isMounted || !router) {
-    return null;
+    return null; // Return null until the router is ready
   }
 
   return (
