@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import clsx from 'clsx';
 import Layout from '../../../components/Layout';
 import ConfirmModal from '../../../components/ConfirmModal';
 
@@ -27,7 +26,7 @@ const Templates = () => {
   return (
     <Layout>
       <h1 className='text-2xl font-bold mb-4'>Email Templates</h1>
-      <div className='mb-4'>
+      <div className='mb-4 flex justify-between'>
         <Link href='/campaigns/templates/create' className='bg-blue-500 text-white px-4 py-2 rounded'>
           Create New Template
         </Link>
