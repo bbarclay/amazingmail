@@ -1,0 +1,4 @@
+Add screenshot and update README
+
+This commit includes the addition of a screenshot to the README file.
+It also updates the README with information about interacting with the environment for task solving.
