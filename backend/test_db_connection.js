@@ -10,20 +10,9 @@ const DATABASE_URL = "postgresql://postgres.yjaxgjzlweqdcfmyippu:[Yp2JTB@XDXHVcY
 const CA_CERT_PATH = path.resolve(__dirname, 'root.crt');
 
 async function testConnection() {
-  let sslConfig = {
-    rejectUnauthorized: false
+  const sslConfig = {
+    rejectUnauthorized: false // Not Recommended for Production
   };
-
-  // Check if the root CA certificate file exists
-  if (fs.existsSync(CA_CERT_PATH)) {
-    console.log('Root CA certificate found. Using it for SSL configuration.');
-    sslConfig = {
-      rejectUnauthorized: true,
-      ca: fs.readFileSync(CA_CERT_PATH).toString(),
-    };
-  } else {
-    console.warn('Root CA certificate not found. Falling back to "rejectUnauthorized: false".');
-  }
 
   const client = new Client({
     connectionString: DATABASE_URL,
