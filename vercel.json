@@ -1,32 +1,31 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "frontend/package.json",
-        "use": "@vercel/next",
-        "config": {
-          "distDir": "frontend/.next"
-        }
-      },
-      {
-        "src": "backend/package.json",
-        "use": "@vercel/node",
-        "config": {
-          "distDir": "backend/dist",
-          "continueOnError": true
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/next",
+      "config": {
+        "distDir": "frontend/.next"
       }
-    ],
-    "ignoreCommand": "echo 'Ignore unrelated directories during deployment'",
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "/backend/api/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/frontend/$1"
+    },
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/node",
+      "config": {
+        "distDir": "backend/dist",
+        "continueOnError": true
       }
-    ]
-  }
-  
+    }
+  ],
+  "ignoreCommand": "echo ''",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ]
+}
