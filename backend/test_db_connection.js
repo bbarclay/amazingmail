@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Client } = require('pg');
 
 // Get database connection details from environment variables
-const DATABASE_URL = "postgresql://postgres.sycsnwbpbijsaqjudice:[YOUR-PASSWORD]@aws-0-us-east-1.pooler.supabase.com:6543/postgres";
+const DATABASE_URL = "postgresql://postgres.yjaxgjzlweqdcfmyippu:[Yp2JTB@XDXHVcY5]@aws-0-us-east-1.pooler.supabase.com:6543/postgres";
 
 async function testConnection() {
   const client = new Client({
