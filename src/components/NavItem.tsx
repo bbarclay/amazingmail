@@ -2,7 +2,7 @@
 import React, { useState, ReactNode } from 'react';
 import Link from 'next/link';
 import { FiChevronDown } from 'react-icons/fi';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface NavItemProps {
   icon: ReactNode;
@@ -14,7 +14,6 @@ interface NavItemProps {
 
 const NavItem = ({ icon, title, href, children, isOpen }: NavItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const router = useRouter();
   const pathname = usePathname();
   const isActive = pathname === href;
 

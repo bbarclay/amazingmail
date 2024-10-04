@@ -2,14 +2,28 @@
 import React, { useState } from 'react';
 import Layout from '../../../components/Layout';
 
+// Define an interface for the segment
+interface Segment {
+  id: number;        // Define the id as a number
+  name: string;      // Define the name as a string
+  criteria: string;  // Define criteria as a string
+}
+
 const LeadSegmentation = () => {
-  const [segments] = useState([]); // Removed `setSegments` as it's not used
+  const [segments, setSegments] = useState<Segment[]>([]); // Type the segments state
   const [newSegmentName, setNewSegmentName] = useState('');
   const [criteria, setCriteria] = useState('');
 
   const handleCreateSegment = () => {
     // Implement the logic to create a new segment using newSegmentName and criteria
-    console.log('Creating segment:', newSegmentName, criteria);
+    const newSegment: Segment = {
+      id: segments.length + 1, // Example ID generation logic
+      name: newSegmentName,
+      criteria: criteria,
+    };
+    
+    setSegments([...segments, newSegment]); // Update segments with the new segment
+    console.log('Creating segment:', newSegment);
   };
 
   return (

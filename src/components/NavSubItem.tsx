@@ -1,7 +1,7 @@
 // src/components/NavSubItem.tsx
 import React from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface NavSubItemProps {
   title: string;
@@ -9,7 +9,6 @@ interface NavSubItemProps {
 }
 
 const NavSubItem = ({ title, href }: NavSubItemProps) => {
-  const router = useRouter();
   const pathname = usePathname();
   const isActive = pathname === href;
 

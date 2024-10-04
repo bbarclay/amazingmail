@@ -8,27 +8,34 @@ import {
 } from '@tanstack/react-table';
 import React from 'react';
 
+// Define an interface for the billing data
+interface BillingData {
+    date: string;
+    description: string;
+    amount: string;
+}
+
 export default function BillingSettings() {
-    const columnHelper = createColumnHelper();
+    const columnHelper = createColumnHelper<BillingData>(); // Specify the data type here
 
     // Define columns for the billing history table
     const columns = [
         columnHelper.accessor('date', {
             header: 'Date',
-            cell: info => info.getValue(),  // Use getValue() instead of renderValue()
+            cell: info => info.getValue(),  // Use getValue() to retrieve the cell value
         }),
         columnHelper.accessor('description', {
             header: 'Description',
-            cell: info => info.getValue(),  // Use getValue() instead of renderValue()
+            cell: info => info.getValue(),  // Use getValue() to retrieve the cell value
         }),
         columnHelper.accessor('amount', {
             header: 'Amount',
-            cell: info => info.getValue(),  // Use getValue() instead of renderValue()
+            cell: info => info.getValue(),  // Use getValue() to retrieve the cell value
         }),
     ];
 
     // Sample data for the billing history
-    const data = [
+    const data: BillingData[] = [
         { date: '2024-05-01', description: 'Subscription Fee', amount: '$49.99' },
         { date: '2024-04-01', description: 'Subscription Fee', amount: '$49.99' },
         { date: '2024-03-01', description: 'Subscription Fee', amount: '$49.99' },
@@ -89,7 +96,7 @@ export default function BillingSettings() {
                             <tr key={row.id}>
                                 {row.getVisibleCells().map(cell => (
                                     <td key={cell.id} className="border border-gray-300 px-4 py-2">
-                                        {cell.getValue() as React.ReactNode}  {/* Change from cell.renderCell() to cell.getValue() */}
+                                        {cell.getValue() as React.ReactNode}
                                     </td>
                                 ))}
                             </tr>

@@ -24,7 +24,7 @@ const AiPromptManager: React.FC<AiPromptManagerProps> = ({ aiPrompts, setAiPromp
     }
   };
 
-  const handleDeletePrompt = (index) => {
+  const handleDeletePrompt = (index: number) => {
     const updatedPrompts = aiPrompts.filter((_, i) => i !== index);
     setAiPrompts(updatedPrompts);
   };

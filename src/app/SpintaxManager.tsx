@@ -24,7 +24,7 @@ const SpintaxManager: React.FC<SpintaxManagerProps> = ({ spintaxTemplates, setSp
     }
   };
 
-  const handleDeleteSpintax = (index) => {
+  const handleDeleteSpintax = (index: number) => {
     const updatedSpintax = spintaxTemplates.filter((_, i) => i !== index);
     setSpintaxTemplates(updatedSpintax);
   };

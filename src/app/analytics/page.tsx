@@ -8,31 +8,38 @@ import {
   createColumnHelper,
 } from '@tanstack/react-table';
 
+interface AnalyticsData {
+  email: string;
+  sent: boolean;
+  opened: boolean;
+  clicked: boolean;
+}
+
 export default function Analytics() {
-  const columnHelper = createColumnHelper();
+  const columnHelper = createColumnHelper<AnalyticsData>();
 
   // Define columns for the analytics table
   const columns = [
     columnHelper.accessor('email', {
       header: 'Email',
-      cell: info => info.getValue(),  // Use getValue() instead of renderValue()
+      cell: info => info.getValue(),
     }),
     columnHelper.accessor('sent', {
       header: 'Sent',
-      cell: info => info.getValue() ? 'Yes' : 'No',  // Render boolean values as "Yes" or "No"
+      cell: info => info.getValue() ? 'Yes' : 'No',
     }),
     columnHelper.accessor('opened', {
       header: 'Opened',
-      cell: info => info.getValue() ? 'Yes' : 'No',  // Render boolean values as "Yes" or "No"
+      cell: info => info.getValue() ? 'Yes' : 'No',
     }),
     columnHelper.accessor('clicked', {
       header: 'Clicked',
-      cell: info => info.getValue() ? 'Yes' : 'No',  // Render boolean values as "Yes" or "No"
+      cell: info => info.getValue() ? 'Yes' : 'No',
     }),
   ];
 
   // Sample data for the analytics table
-  const data = [
+  const data: AnalyticsData[] = [
     { email: 'test1@example.com', sent: true, opened: true, clicked: false },
     { email: 'test2@example.com', sent: true, opened: false, clicked: false },
     { email: 'test3@example.com', sent: true, opened: true, clicked: true },
@@ -103,7 +110,7 @@ export default function Analytics() {
               <tr key={row.id}>
                 {row.getVisibleCells().map(cell => (
                   <td key={cell.id} className="border border-gray-300 px-4 py-2">
-                    {cell.getValue() as React.ReactNode}  {/* Change from cell.renderCell() to cell.getValue() */}
+                    {cell.getValue() as React.ReactNode}
                   </td>
                 ))}
               </tr>
