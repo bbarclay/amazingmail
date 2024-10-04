@@ -1,7 +1,18 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 
-const SpintaxManager = ({ spintaxTemplates, setSpintaxTemplates, onClose }) => {
+interface SpintaxTemplate {
+  name: string;
+  content: string;
+}
+
+interface SpintaxManagerProps {
+  spintaxTemplates: SpintaxTemplate[];
+  setSpintaxTemplates: Dispatch<SetStateAction<SpintaxTemplate[]>>;
+  onClose: () => void;
+}
+
+const SpintaxManager: React.FC<SpintaxManagerProps> = ({ spintaxTemplates, setSpintaxTemplates, onClose }) => {
   const [newSpintaxName, setNewSpintaxName] = useState('');
   const [newSpintaxContent, setNewSpintaxContent] = useState('');
 

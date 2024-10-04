@@ -1,7 +1,18 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 
-const AiPromptManager = ({ aiPrompts, setAiPrompts, onClose }) => {
+interface AiPrompt {
+  name: string;
+  content: string;
+}
+
+interface AiPromptManagerProps {
+  aiPrompts: AiPrompt[];
+  setAiPrompts: Dispatch<SetStateAction<AiPrompt[]>>;
+  onClose: () => void;
+}
+
+const AiPromptManager: React.FC<AiPromptManagerProps> = ({ aiPrompts, setAiPrompts, onClose }) => {
   const [newPromptName, setNewPromptName] = useState('');
   const [newPromptContent, setNewPromptContent] = useState('');
 
