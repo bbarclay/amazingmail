@@ -7,13 +7,13 @@ const EditLead = () => {
   const router = useRouter();
   const params = useParams();
   const { id } = params;
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ name: string; email: string; company: string; status: string }>({
     name: '',
     email: '',
     company: '',
     status: '',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
 
   useEffect(() => {
     if (id) {
@@ -21,19 +21,19 @@ const EditLead = () => {
     }
   }, [id]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 
-  const validate = () => {
-    const newErrors = {};
+  const validate = (): { name?: string; email?: string } => {
+    const newErrors: { name?: string; email?: string } = {};
     if (!form.name) newErrors.name = 'Name is required';
     if (!form.email) newErrors.email = 'Email is required';
     // Additional validations...
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);

@@ -5,24 +5,24 @@ import Layout from '../../../components/Layout';
 
 const CreateDomain = () => {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ domainName: string; verificationMethod: string }>({
     domainName: '',
     verificationMethod: '',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ domainName?: string; verificationMethod?: string }>({});
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 
-  const validate = () => {
-    const newErrors = {};
+  const validate = (): { domainName?: string; verificationMethod?: string } => {
+    const newErrors: { domainName?: string; verificationMethod?: string } = {};
     if (!form.domainName) newErrors.domainName = 'Domain name is required';
     if (!form.verificationMethod) newErrors.verificationMethod = 'Verification method is required';
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
