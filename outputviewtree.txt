@@ -1,0 +1,134 @@
+.
+├── backend
+│   ├── README.md
+│   ├── api
+│   ├── create.ipynb
+│   ├── create.sh
+│   ├── migrations
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── recreate_files.sh
+│   ├── scripts
+│   ├── seeders
+│   ├── supabaseClient.js
+│   └── tests
+├── frontend
+│   ├── LICENSE
+│   ├── README.md
+│   ├── app.py
+│   ├── commit_message.txt
+│   ├── next-env.d.ts
+│   ├── next.config.mjs
+│   ├── outputviewtree.txt
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── postcss.config.mjs
+│   ├── public
+│   │   ├── logo.svg
+│   │   └── placeholder.svg
+│   ├── readme_files
+│   │   ├── amazingmail.webp
+│   │   └── appscreen.png
+│   ├── runopendev copy.sh
+│   ├── runopendev.sh
+│   ├── server.log
+│   ├── settings_grid_view.py
+│   ├── src
+│   │   ├── Layout.module.css
+│   │   ├── app
+│   │   │   ├── AiPromptManager.tsx
+│   │   │   ├── SpintaxManager.tsx
+│   │   │   ├── analytics
+│   │   │   │   └── page.tsx
+│   │   │   ├── campaigns
+│   │   │   │   ├── all
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── create
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── templates
+│   │   │   │       ├── create
+│   │   │   │       │   └── page.tsx
+│   │   │   │       └── page.tsx
+│   │   │   ├── domains
+│   │   │   │   ├── create
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── manage
+│   │   │   │       └── page.tsx
+│   │   │   ├── email-accounts
+│   │   │   │   ├── generate
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── import-bulk
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── manage
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── setup
+│   │   │   │       └── page.tsx
+│   │   │   ├── favicon.ico
+│   │   │   ├── fonts
+│   │   │   │   ├── GeistMonoVF.woff
+│   │   │   │   └── GeistVF.woff
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   ├── leads
+│   │   │   │   ├── [id]
+│   │   │   │   │   └── edit
+│   │   │   │   │       └── page.tsx
+│   │   │   │   ├── all
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── import
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── segmentation
+│   │   │   │       └── page.tsx
+│   │   │   ├── page.tsx
+│   │   │   ├── privacy
+│   │   │   │   └── page.tsx
+│   │   │   ├── settings
+│   │   │   │   ├── account
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── api
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── billing
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── page.tsx.fixed
+│   │   │   │   ├── domains
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── notifications
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx
+│   │   │   ├── support
+│   │   │   │   └── page.tsx
+│   │   │   └── terms
+│   │   │       └── page.tsx
+│   │   ├── components
+│   │   │   ├── AiPromptManager.tsx
+│   │   │   ├── ConfirmModal.tsx
+│   │   │   ├── DashboardCard.tsx
+│   │   │   ├── DashboardContent.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Layout.tsx
+│   │   │   ├── NavItem.tsx
+│   │   │   ├── NavSubItem.tsx
+│   │   │   ├── SettingsGrid.tsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── SpintaxManager.tsx
+│   │   │   ├── Topbar.tsx
+│   │   │   └── ui
+│   │   │       ├── DarkModeToggle.tsx
+│   │   │       ├── button.tsx
+│   │   │       ├── card.tsx
+│   │   │       ├── dropdown-menu.tsx
+│   │   │       ├── input.tsx
+│   │   │       ├── skeleton.tsx
+│   │   │       └── switch.tsx
+│   │   ├── layout.tsx
+│   │   ├── lib
+│   │   │   └── utils.ts
+│   │   └── styles
+│   │       └── globals.css
+│   ├── tailwind.config.js
+│   ├── tailwind.config.ts
+│   └── tsconfig.json
+└── outputviewtree.txt
+
+46 directories, 86 files
