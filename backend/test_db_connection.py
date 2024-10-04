@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get database connection details from environment variables
-DATABASE_URL = os.getenv("POSTGRES_URL")
+DATABASE_URL = "postgresql://postgres.sycsnwbpbijsaqjudice:[YOUR-PASSWORD]@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
 
 def test_connection():
     try:
