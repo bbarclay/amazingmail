@@ -7,9 +7,7 @@ const DATABASE_URL = "postgresql://postgres.yjaxgjzlweqdcfmyippu:[Yp2JTB@XDXHVcY
 async function testConnection() {
   const client = new Client({
     connectionString: DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    ssl: true
   });
 
   try {
