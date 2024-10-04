@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import Layout from '../../../components/Layout';
-import ConfirmModal from '../../../components/ConfirmModal';
+import Layout from '../../../../components/Layout';
+import ConfirmModal from '../../../../components/ConfirmModal';
 
 // Define the type for campaign data
 interface CampaignType {
