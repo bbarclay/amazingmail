@@ -22,7 +22,13 @@ async function testConnection() {
     // Print success message
     console.log("Connected to the database and created test_table successfully.");
   } catch (error) {
-    console.error(`Error connecting to the database: ${error}`);
+    if (error instanceof AggregateError) {
+      for (const individualError of error.errors) {
+        console.error(`Individual error: ${individualError.message}`);
+      }
+    } else {
+      console.error(`Error connecting to the database: ${error.message}`);
+    }
   } finally {
     // Close the database connection
     await client.end();
