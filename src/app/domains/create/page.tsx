@@ -11,7 +11,7 @@ const CreateDomain = () => {
   });
   const [errors, setErrors] = useState<{ domainName?: string; verificationMethod?: string }>({});
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 

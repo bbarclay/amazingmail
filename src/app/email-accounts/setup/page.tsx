@@ -17,7 +17,7 @@ const SetupEmailAccount = () => {
   });
   const [errors, setErrors] = useState<{ email?: string; password?: string; provider?: string }>({});
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 
