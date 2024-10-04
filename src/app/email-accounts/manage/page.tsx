@@ -7,22 +7,35 @@ import { useRouter } from 'next/navigation';
 
 const ManageEmailAccounts = () => {
   const router = useRouter();
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState<{ id: number; email: string; provider: string; status: 'Active' | 'Inactive' }[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState<{ id: number; email: string; provider: string; status: string } | null>(null);
 
   useEffect(() => {
-    // Fetch email accounts from API
+    // Fetch email accounts from API (replace with actual API call)
+    const fetchAccounts = async () => {
+      const mockAccounts = [
+        { id: 1, email: 'user1@example.com', provider: 'Gmail', status: 'Active' },
+        { id: 2, email: 'user2@mycompany.org', provider: 'Outlook', status: 'Inactive' },
+      ];
+      setAccounts(mockAccounts);
+    };
+
+    fetchAccounts();
   }, []);
 
-  const handleDelete = (account) => {
+  const handleDelete = (account: { id: number; email: string; provider: string; status: string }) => {
     setSelectedAccount(account);
     setIsModalOpen(true);
   };
 
   const confirmDelete = () => {
     setIsModalOpen(false);
-    // Delete account via API
+    if (selectedAccount) {
+      // Implement deletion logic here, e.g., call API to delete account
+      setAccounts(accounts.filter((acc) => acc.id !== selectedAccount.id));
+      setSelectedAccount(null);
+    }
   };
 
   const handleAddAccount = () => {
@@ -55,24 +68,32 @@ const ManageEmailAccounts = () => {
           </tr>
         </thead>
         <tbody>
-          {accounts.map((account) => (
-            <tr key={account.id} className='text-center'>
-              <td className='py-2'>{account.email}</td>
-              <td className='py-2'>{account.provider}</td>
-              <td
-                className={clsx('py-2', {
-                  'text-green-500': account.status === 'Active',
-                  'text-gray-500': account.status === 'Inactive',
-                })}
-              >
-                {account.status}
-              </td>
-              <td className='py-2'>
-                <button className='mr-2 text-blue-500' onClick={() => router.push(`/email-accounts/${account.id}/edit`)}>Edit</button>
-                <button onClick={() => handleDelete(account)} className='text-red-500'>Remove</button>
+          {accounts.length > 0 ? (
+            accounts.map((account) => (
+              <tr key={account.id} className='text-center'>
+                <td className='py-2'>{account.email}</td>
+                <td className='py-2'>{account.provider}</td>
+                <td
+                  className={clsx('py-2', {
+                    'text-green-500': account.status === 'Active',
+                    'text-gray-500': account.status === 'Inactive',
+                  })}
+                >
+                  {account.status}
+                </td>
+                <td className='py-2'>
+                  <button className='mr-2 text-blue-500' onClick={() => router.push(`/email-accounts/${account.id}/edit`)}>Edit</button>
+                  <button onClick={() => handleDelete(account)} className='text-red-500'>Remove</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={4} className='py-4 text-center text-gray-500'>
+                No accounts available.
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
@@ -88,4 +109,3 @@ const ManageEmailAccounts = () => {
 };
 
 export default ManageEmailAccounts;
-
