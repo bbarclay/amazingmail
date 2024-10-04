@@ -1,15 +1,14 @@
-// src/components/NavSubItem.tsx
+// components/NavSubItem.tsx
 import React from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface NavSubItemProps {
   title: string;
   href: string;
 }
 
-const NavSubItem = ({ title, href }: NavSubItemProps) => {
-  const router = useRouter();
+const NavSubItem: React.FC<NavSubItemProps> = ({ title, href }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
 
