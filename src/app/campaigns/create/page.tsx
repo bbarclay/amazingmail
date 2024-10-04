@@ -1,10 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Layout from '../../../components/Layout';
+// import { useRouter } from 'next/navigation'; // Use if needed; otherwise, remove to avoid ESLint warnings
 
 const CreateCampaign = () => {
-  const router = useRouter();
+  // State to manage form data
   const [form, setForm] = useState({
     name: '',
     subject: '',
@@ -12,14 +12,18 @@ const CreateCampaign = () => {
     targetAudience: '',
     schedule: '',
   });
-  const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
+  // State to manage errors
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  // Handle form input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Validate form inputs
   const validate = () => {
-    const newErrors = {};
+    const newErrors: { [key: string]: string } = {};
     if (!form.name) newErrors.name = 'Campaign name is required';
     if (!form.subject) newErrors.subject = 'Email subject is required';
     if (!form.body) newErrors.body = 'Email body is required';
@@ -28,15 +32,21 @@ const CreateCampaign = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
+
+    // Check if there are no validation errors
     if (Object.keys(validationErrors).length === 0) {
-      // Submit form data to API
+      // Submit form data to the API
+      console.log('Form submitted:', form);
+      // You can implement API submission or navigation logic here
     }
   };
 
+  // Reset form fields and errors
   const handleReset = () => {
     setForm({
       name: '',
@@ -97,7 +107,7 @@ const CreateCampaign = () => {
             className='w-full border px-2 py-1'
           >
             <option value=''>Select Audience</option>
-            {/* Populate with existing lists later */}
+            {/* You can dynamically populate this list from an API */}
           </select>
           {errors.targetAudience && <p className='text-red-500 text-sm'>{errors.targetAudience}</p>}
         </div>
@@ -127,4 +137,3 @@ const CreateCampaign = () => {
 };
 
 export default CreateCampaign;
-
