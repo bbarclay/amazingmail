@@ -12,7 +12,8 @@
         "src": "backend/package.json",
         "use": "@vercel/node",
         "config": {
-          "distDir": "backend/dist"
+          "distDir": "backend/dist",
+          "continueOnError": true
         }
       }
     ],
