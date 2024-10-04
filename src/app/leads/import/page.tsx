@@ -1,21 +1,34 @@
 'use client';
 import React, { useState } from 'react';
 import Layout from '../../../components/Layout';
-import { useRouter } from 'next/navigation';
 
 const ImportLeads = () => {
-  const router = useRouter();
-  const [file, setFile] = useState(null);
-  const [importing, setImporting] = useState(false);
+  const [file, setFile] = useState<File | null>(null); // State to hold the selected file
+  const [importing, setImporting] = useState(false); // State to manage importing status
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]); // Set the selected file
+    } else {
+      setFile(null); // Reset file state if no file is selected
+    }
   };
 
-  const handleImport = () => {
+  const handleImport = async () => {
     if (file) {
-      setImporting(true);
-      // Handle file upload and import leads
+      setImporting(true); // Set importing status to true
+      try {
+        // Handle file upload and import leads
+        console.log('Importing file:', file.name);
+        // Simulate file import process
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        // Reset file input after import
+        setFile(null);
+      } catch (error) {
+        console.error('Error importing leads:', error); // Log any errors
+      } finally {
+        setImporting(false); // Reset importing status
+      }
     }
   };
 
@@ -25,11 +38,17 @@ const ImportLeads = () => {
       <div className='space-y-4'>
         <div>
           <label className='block mb-1'>Select CSV File</label>
-          <input type='file' accept='.csv' onChange={handleFileChange} className='w-full' />
+          <input 
+            type='file' 
+            accept='.csv' 
+            onChange={handleFileChange} 
+            className='w-full' 
+          />
         </div>
         <button
           onClick={handleImport}
-          disabled={!file || importing}
+          disabled={!file || importing} // Disable button if no file or importing
+          aria-busy={importing} // Add aria-busy for accessibility
           className='bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400'
         >
           {importing ? 'Importing...' : 'Import Leads'}
@@ -40,4 +59,3 @@ const ImportLeads = () => {
 };
 
 export default ImportLeads;
-
