@@ -4,23 +4,43 @@ import Link from 'next/link';
 import Layout from '../../../components/Layout';
 import ConfirmModal from '../../../components/ConfirmModal';
 
+// Type definition for template data (use only if using TypeScript)
+interface TemplateType {
+  id: number;
+  name: string;
+}
+
 const Templates = () => {
-  const [templates, setTemplates] = useState([]);
+  // State hooks with type annotations (if using TypeScript)
+  const [templates, setTemplates] = useState<TemplateType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(null);
 
   useEffect(() => {
-    // Fetch templates from API later
+    // Fetch templates from API (Replace with real API call)
+    const fetchTemplates = async () => {
+      const mockTemplates: TemplateType[] = [
+        { id: 1, name: 'Welcome Email' },
+        { id: 2, name: 'Discount Offer' },
+      ];
+      setTemplates(mockTemplates);
+    };
+
+    fetchTemplates();
   }, []);
 
-  const handleDelete = (template) => {
+  const handleDelete = (template: TemplateType) => {
     setSelectedTemplate(template);
     setIsModalOpen(true);
   };
 
   const confirmDelete = () => {
     setIsModalOpen(false);
-    // Delete template via API
+    if (selectedTemplate) {
+      // Implement deletion logic here, e.g., call API to delete template
+      setTemplates(templates.filter((t) => t.id !== selectedTemplate.id));
+      setSelectedTemplate(null);
+    }
   };
 
   return (
@@ -39,26 +59,32 @@ const Templates = () => {
           </tr>
         </thead>
         <tbody>
-          {templates.map((template) => (
-            <tr key={template.id} className='text-center'>
-              <td className='py-2'>{template.name}</td>
-              <td className='py-2'>
-                <Link
-                  href={`/campaigns/templates/${template.id}/edit`}
-                  className='mr-2 text-blue-500'
-                >
-                  Edit
-                </Link>
-                <button onClick={() => handleDelete(template)} className='text-red-500'>
-                  Delete
-                </button>
-                <button className='ml-2 text-green-500'>Preview</button>
+          {templates.length > 0 ? (
+            templates.map((template) => (
+              <tr key={template.id} className='text-center'>
+                <td className='py-2'>{template.name}</td>
+                <td className='py-2'>
+                  <Link href={`/campaigns/templates/${template.id}/edit`} className='mr-2 text-blue-500'>
+                    Edit
+                  </Link>
+                  <button onClick={() => handleDelete(template)} className='text-red-500'>
+                    Delete
+                  </button>
+                  <button className='ml-2 text-green-500'>Preview</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={2} className='py-4 text-center text-gray-500'>
+                No templates available.
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
+      {/* Confirm Modal for deletion */}
       <ConfirmModal
         isOpen={isModalOpen}
         title='Confirm Deletion'

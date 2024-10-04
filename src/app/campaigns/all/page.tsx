@@ -1,28 +1,47 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Layout from '../../../components/Layout';
 import ConfirmModal from '../../../components/ConfirmModal';
 
+// Define the type for campaign data
+interface CampaignType {
+  id: number;
+  name: string;
+  status: 'Active' | 'Paused' | 'Completed'; // Union type for status
+  dateCreated: string;
+}
+
 const CampaignsAll = () => {
-  const [campaigns, setCampaigns] = useState([]);
+  const [campaigns, setCampaigns] = useState<CampaignType[]>([]); // Use CampaignType[] as state type
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCampaign, setSelectedCampaign] = useState(null);
+  const [selectedCampaign, setSelectedCampaign] = useState<CampaignType | null>(null); // Allow null value
 
   useEffect(() => {
-    // Fetch campaigns from API later
+    // Fetch campaigns from API later (example of setting state)
+    const fetchCampaigns = async () => {
+      const mockCampaigns: CampaignType[] = [
+        { id: 1, name: 'Campaign 1', status: 'Active', dateCreated: '2023-10-03' },
+        { id: 2, name: 'Campaign 2', status: 'Paused', dateCreated: '2023-09-28' },
+      ];
+      setCampaigns(mockCampaigns);
+    };
+    fetchCampaigns();
   }, []);
 
-  const handleDelete = (campaign) => {
+  const handleDelete = (campaign: CampaignType) => {
     setSelectedCampaign(campaign);
     setIsModalOpen(true);
   };
 
   const confirmDelete = () => {
     setIsModalOpen(false);
-    // Delete campaign via API
+    if (selectedCampaign) {
+      // Perform deletion logic here, e.g., call API to delete campaign
+      setCampaigns(campaigns.filter((c) => c.id !== selectedCampaign.id));
+      setSelectedCampaign(null);
+    }
   };
 
   return (
@@ -71,6 +90,7 @@ const CampaignsAll = () => {
         Create New Campaign
       </Link>
 
+      {/* Confirm Modal */}
       <ConfirmModal
         isOpen={isModalOpen}
         title='Confirm Deletion'
@@ -83,4 +103,3 @@ const CampaignsAll = () => {
 };
 
 export default CampaignsAll;
-

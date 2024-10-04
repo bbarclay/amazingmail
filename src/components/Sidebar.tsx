@@ -1,13 +1,16 @@
-// src/components/Sidebar.tsx
+'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // Use next/navigation for Next.js 13+ compatibility
+import Image from 'next/image'; // Use Next.js Image for optimization
 import { FiHome, FiSend, FiUsers, FiSettings, FiHelpCircle, FiAtSign, FiGlobe, FiBarChart2 } from 'react-icons/fi';
-import { ChevronDown, ChevronRight } from 'lucide-react';
 import NavItem from './NavItem';
 import NavSubItem from './NavSubItem';
 
-const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
+interface SidebarProps {
+  isOpen: boolean;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -15,8 +18,6 @@ const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
   }, []);
 
   if (!isMounted) return null;
-
-  const router = useRouter();
 
   return (
     <nav
@@ -26,7 +27,8 @@ const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
     >
       <div className="p-4 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <img src="/logo.svg" alt="Logo" className="h-8 w-8" />
+          {/* Use Image component for optimization */}
+          <Image src="/logo.svg" alt="Logo" className="h-8 w-8" width={32} height={32} />
           {isOpen && <span className="ml-2 text-2xl font-bold text-gray-800 dark:text-white">Cold Email</span>}
         </Link>
       </div>
