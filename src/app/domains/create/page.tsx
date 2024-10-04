@@ -15,8 +15,8 @@ const CreateDomain = () => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 
-  const validate = () => {
-    const newErrors = {};
+  const validate = (): { domainName?: string; verificationMethod?: string } => {
+    const newErrors: { domainName?: string; verificationMethod?: string } = {};
     if (!form.domainName) newErrors.domainName = 'Domain name is required';
     if (!form.verificationMethod) newErrors.verificationMethod = 'Verification method is required';
     return newErrors;

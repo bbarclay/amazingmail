@@ -25,8 +25,8 @@ const EditLead = () => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 
-  const validate = () => {
-    const newErrors = {};
+  const validate = (): { name?: string; email?: string } => {
+    const newErrors: { name?: string; email?: string } = {};
     if (!form.name) newErrors.name = 'Name is required';
     if (!form.email) newErrors.email = 'Email is required';
     // Additional validations...

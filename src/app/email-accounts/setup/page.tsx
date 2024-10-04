@@ -21,8 +21,8 @@ const SetupEmailAccount = () => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 
-  const validate = () => {
-    const newErrors = {};
+  const validate = (): { email?: string; password?: string; provider?: string } => {
+    const newErrors: { email?: string; password?: string; provider?: string } = {};
     if (!form.email) newErrors.email = 'Email address is required';
     if (!form.password) newErrors.password = 'Password is required';
     if (!form.provider) newErrors.provider = 'Provider is required';
