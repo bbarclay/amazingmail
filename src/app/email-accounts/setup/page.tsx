@@ -30,7 +30,7 @@ const SetupEmailAccount = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
