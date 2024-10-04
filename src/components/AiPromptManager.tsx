@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 
 interface AiPrompt {
   name: string;
@@ -8,7 +8,7 @@ interface AiPrompt {
 
 interface AiPromptManagerProps {
   aiPrompts: AiPrompt[];
-  setAiPrompts: React.Dispatch<React.SetStateAction<AiPrompt[]>>;
+  setAiPrompts: Dispatch<SetStateAction<AiPrompt[]>>;
   onClose: () => void;
 }
 

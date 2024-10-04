@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 
 interface SpintaxTemplate {
   name: string;
@@ -8,7 +8,7 @@ interface SpintaxTemplate {
 
 interface SpintaxManagerProps {
   spintaxTemplates: SpintaxTemplate[];
-  setSpintaxTemplates: React.Dispatch<React.SetStateAction<SpintaxTemplate[]>>;
+  setSpintaxTemplates: Dispatch<SetStateAction<SpintaxTemplate[]>>;
   onClose: () => void;
 }
 
