@@ -1,1 +1,0 @@
-{"version": 2, "name": "backend", "builds": [{"src": "api/**/*.js", "use": "@vercel/node"}], "routes": [{"src": "/api/(.*)", "dest": "/api/$1"}], "ignoreCommand": "echo Ignore frontend during deployment"}
