@@ -7,13 +7,13 @@ const EditLead = () => {
   const router = useRouter();
   const params = useParams();
   const { id } = params;
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ name: string; email: string; company: string; status: string }>({
     name: '',
     email: '',
     company: '',
     status: '',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
 
   useEffect(() => {
     if (id) {

@@ -5,11 +5,11 @@ import Layout from '../../../components/Layout';
 
 const CreateDomain = () => {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ domainName: string; verificationMethod: string }>({
     domainName: '',
     verificationMethod: '',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ domainName?: string; verificationMethod?: string }>({});
 
   const handleChange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});

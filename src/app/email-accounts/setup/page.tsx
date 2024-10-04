@@ -5,7 +5,7 @@ import Layout from '../../../components/Layout';
 
 const SetupEmailAccount = () => {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ email: string; password: string; provider: string; imapHost: string; imapPort: string; smtpHost: string; smtpPort: string; encryption: string }>({
     email: '',
     password: '',
     provider: '',
@@ -15,7 +15,7 @@ const SetupEmailAccount = () => {
     smtpPort: '',
     encryption: '',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string; provider?: string }>({});
 
   const handleChange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});

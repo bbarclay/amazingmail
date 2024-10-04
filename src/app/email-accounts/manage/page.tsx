@@ -14,7 +14,7 @@ const ManageEmailAccounts = () => {
   useEffect(() => {
     // Fetch email accounts from API (replace with actual API call)
     const fetchAccounts = async () => {
-      const mockAccounts = [
+      const mockAccounts: { id: number; email: string; provider: string; status: 'Active' | 'Inactive' }[] = [
         { id: 1, email: 'user1@example.com', provider: 'Gmail', status: 'Active' },
         { id: 2, email: 'user2@mycompany.org', provider: 'Outlook', status: 'Inactive' },
       ];

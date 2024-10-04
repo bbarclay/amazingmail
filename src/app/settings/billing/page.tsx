@@ -89,7 +89,7 @@ export default function BillingSettings() {
                             <tr key={row.id}>
                                 {row.getVisibleCells().map(cell => (
                                     <td key={cell.id} className="border border-gray-300 px-4 py-2">
-                                        {cell.getValue()}  {/* Change from cell.renderCell() to cell.getValue() */}
+                                        {cell.getValue() as React.ReactNode}  {/* Change from cell.renderCell() to cell.getValue() */}
                                     </td>
                                 ))}
                             </tr>
