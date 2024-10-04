@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write .",
+    "vercel": "vercel dev",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.9",
@@ -34,7 +37,8 @@
     "eslint-config-next": "14.2.14",
     "plop": "^4.0.1",
     "postcss": "^8.4.47",
+    "prettier": "^3.0.0",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5"
+    "typescript": "^5.6.2"
   }
 }
