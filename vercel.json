@@ -12,12 +12,10 @@
       "src": "backend/package.json",
       "use": "@vercel/node",
       "config": {
-        "distDir": "backend/dist",
-        "continueOnError": true
+        "distDir": "backend/dist"
       }
     }
   ],
-  "ignoreCommand": "echo ''",
   "routes": [
     {
       "src": "/api/(.*)",
