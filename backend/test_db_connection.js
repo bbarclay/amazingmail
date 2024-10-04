@@ -8,7 +8,7 @@ async function testConnection() {
   const client = new Client({
     connectionString: DATABASE_URL,
     ssl: {
-      rejectUnauthorized: false
+      rejectUnauthorized: false // Not Recommended for Production
     }
   });
 
