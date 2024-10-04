@@ -1,8 +1,7 @@
-// src/components/NavItem.tsx
-import React, { useState, ReactNode } from 'react';
+// components/NavItem.tsx
+import React, { ReactNode } from 'react';
 import Link from 'next/link';
-import { FiChevronDown } from 'react-icons/fi';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface NavItemProps {
   icon: ReactNode;
@@ -12,17 +11,9 @@ interface NavItemProps {
   isOpen: boolean;
 }
 
-const NavItem = ({ icon, title, href, children, isOpen }: NavItemProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const router = useRouter();
+const NavItem: React.FC<NavItemProps> = ({ icon, title, href, children, isOpen }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
-
-  const toggleExpand = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    e.stopPropagation(); // Prevent the default link behavior and event propagation
-    setIsExpanded(!isExpanded);
-  };
 
   return (
     <li className="relative">
@@ -36,24 +27,10 @@ const NavItem = ({ icon, title, href, children, isOpen }: NavItemProps) => {
           <span className="text-xl">{icon}</span>
           {isOpen && <span className="ml-4">{title}</span>}
         </Link>
-
-        {/* Submenu Toggle Button */}
-        {children && isOpen && (
-          <button
-            className="ml-auto focus:outline-none"
-            onClick={toggleExpand} // Toggle submenu
-          >
-            <FiChevronDown
-              className={`transition-transform duration-200 ${
-                isExpanded ? 'rotate-180' : ''
-              }`}
-            />
-          </button>
-        )}
       </div>
 
-      {/* Submenu Items */}
-      {children && isExpanded && isOpen && (
+      {/* Submenu Items - Always Expanded */}
+      {children && isOpen && (
         <ul className="ml-8 mt-2 space-y-1">
           {children}
         </ul>
