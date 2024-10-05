@@ -19,7 +19,7 @@ const CampaignsAll = () => {
   const [selectedCampaign, setSelectedCampaign] = useState<CampaignType | null>(null); // Allow null value
 
   useEffect(() => {
-    // @todo: Replace mock data with API call to fetch campaigns
+    // @todo: Implement API call to fetch campaigns
     const fetchCampaigns = async () => {
       const mockCampaigns: CampaignType[] = [
         { id: 1, name: 'Campaign 1', status: 'Active', dateCreated: '2023-10-03' },

@@ -17,7 +17,7 @@ const Templates = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(null);
 
   useEffect(() => {
-    // @todo: Replace mock data with API call to fetch templates
+    // @todo: Implement API call to fetch templates
     const fetchTemplates = async () => {
       const mockTemplates: TemplateType[] = [
         { id: 1, name: 'Welcome Email' },
