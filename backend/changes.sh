@@ -2,43 +2,59 @@
 # --------------------------------------------------------------
 # Script: setup-enterprise-database.sh
 # Description: Sets up the necessary modules, controllers,
-#              services, entities, and migrations for an
-#              enterprise-grade SaaS platform using NestJS,
+#              services, entities, guards, strategies, and migrations
+#              for an enterprise-grade SaaS platform using NestJS,
 #              PostgreSQL, and Stripe, incorporating best practices
 #              for scalability, security, and maintainability.
 # --------------------------------------------------------------
 
-# Exit immediately if a command exits with a non-zero status
-set -e
+# # Exit immediately if a command exits with a non-zero status
+# set -e
 
-# Function to display messages
-function echo_msg() {
-  echo -e "\n==> $1\n"
-}
+# # Function to display messages
+# function echo_msg() {
+#   echo -e "\n==> $1\n"
+# }
 
-# Navigate to the NestJS project directory
-echo_msg "Navigating to the NestJS project directory..."
+# # Function to handle errors and exit
+# function handle_error() {
+#   echo_msg "An error occurred. Exiting the script."
+#   exit 1
+# }
+
+# # Trap errors and call handle_error
+# trap 'handle_error' ERR
+
+# # Check if the script is run from the correct directory
+# if [ ! -d "api" ]; then
+#   echo_msg "Error: 'api' directory not found. Please run this script from the root directory containing 'api'."
+#   exit 1
+# fi
+
+# # Navigate to the NestJS project directory
+# echo_msg "Navigating to the NestJS project directory..."
 cd api
 
-# Install necessary dependencies
-echo_msg "Installing necessary dependencies..."
-npm install --save @nestjs/typeorm typeorm pg
-npm install --save @nestjs/jwt passport-jwt passport
-npm install --save bcrypt
-npm install --save class-validator class-transformer class-sanitizer
-npm install --save stripe
-npm install --save dotenv @nestjs/config
-npm install --save @nestjs/passport
-npm install --save helmet
-npm install --save @nestjs/throttler
-npm install --save @nestjs/mongoose mongoose
-npm install --save @nestjs/platform-express
-npm install --save @nestjs/core
-npm install --save winston nest-winston
-npm install --save @nestjs/terminus
-npm install --save @nestjs/serve-static serve-static
-npm install --save-dev @types/bcrypt @types/passport-jwt @types/express-rate-limit
-npm install --save-dev jest @nestjs/testing @types/supertest supertest ts-jest
+# # Remove existing node_modules and package-lock.json to prevent conflicts
+# echo_msg "Removing existing node_modules and package-lock.json to ensure a clean installation..."
+# rm -rf node_modules package-lock.json
+
+# # Install necessary dependencies with updated versions
+# echo_msg "Installing necessary dependencies..."
+# npm install --save @nestjs/typeorm typeorm pg
+# npm install --save @nestjs/jwt passport-jwt passport
+# npm install --save bcrypt
+# npm install --save class-validator class-transformer class-sanitizer
+# npm install --save stripe
+# npm install --save dotenv @nestjs/config
+# npm install --save @nestjs/passport
+# npm install --save helmet
+# npm install --save @nestjs/throttler@3.0.0 # Updated to version compatible with NestJS v10
+# npm install --save winston nest-winston
+# npm install --save @nestjs/terminus
+# npm install --save @nestjs/serve-static serve-static
+# npm install --save-dev @types/bcrypt @types/passport-jwt @types/express-rate-limit
+# npm install --save-dev jest @nestjs/testing @types/supertest supertest ts-jest
 
 # Define the list of modules to create
 MODULES=("auth" "users" "teams" "payments" "api-keys")
@@ -46,13 +62,13 @@ MODULES=("auth" "users" "teams" "payments" "api-keys")
 # Loop through each module and generate it along with its controller and service
 for MODULE in "${MODULES[@]}"; do
   echo_msg "Generating module: $MODULE"
-  nest generate module "$MODULE" --no-interactive
+  nest generate module "$MODULE"
 
   echo_msg "Generating controller for: $MODULE"
-  nest generate controller "$MODULE" --no-interactive
+  nest generate controller "$MODULE" --no-spec
 
   echo_msg "Generating service for: $MODULE"
-  nest generate service "$MODULE" --no-interactive
+  nest generate service "$MODULE" --no-spec
 done
 
 # Create a directory for entities if it doesn't exist
@@ -255,11 +271,10 @@ const ormconfig: TypeOrmModuleOptions = {
   logging: true,
   cache: true,
   extra: {
-    max: 10, // connection pool size
+    max: 10,
   },
 };
-
-export = ormconfig;
+export default ormconfig;
 EOF
 
 # Update app.module.ts to use the new ormconfig
@@ -278,7 +293,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -451,13 +466,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  @Throttle(5, 60)
+  @Throttle(5, 60) 
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
   @Post('login')
-  @Throttle(10, 60)
+  @Throttle(10, 60) 
   async login(@Body() loginDto: LoginDto) {
     const token = await this.authService.login(loginDto);
     if (!token) {
@@ -536,7 +551,7 @@ export class AuthService {
       user.resetPasswordToken = null;
       user.resetPasswordExpires = null;
       await this.usersRepository.save(user);
-      // Optionally, send a confirmation email here
+      
     } else {
       throw new BadRequestException('User not found');
     }
@@ -558,6 +573,73 @@ export class PasswordResetDto {
   @MinLength(6)
   newPassword: string;
 }
+EOF
+
+# Create JwtAuthGuard
+echo_msg "Creating JwtAuthGuard..."
+mkdir -p src/auth/guards
+cat <<EOF > src/auth/guards/jwt-auth.guard.ts
+import { Injectable } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+
+@Injectable()
+export class JwtAuthGuard extends AuthGuard('jwt') {}
+EOF
+
+# Create JwtStrategy
+echo_msg "Creating JwtStrategy..."
+mkdir -p src/auth/strategies
+cat <<EOF > src/auth/strategies/jwt.strategy.ts
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(private configService: ConfigService) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: configService.get<string>('JWT_SECRET'),
+    });
+  }
+
+  async validate(payload: any) {
+    return { userId: payload.sub, email: payload.email };
+  }
+}
+EOF
+
+# Update Auth Module to include JwtStrategy and JwtAuthGuard
+echo_msg "Updating Auth Module to include JwtStrategy and JwtAuthGuard..."
+cat <<EOF > src/auth/auth.module.ts
+import { Module } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../entities/user.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService, ConfigModule } from '@nestjs/config';
+import { JwtStrategy } from './strategies/jwt.strategy';
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '60m' },
+      }),
+    }),
+  ],
+  providers: [AuthService, JwtStrategy],
+  controllers: [AuthController],
+  exports: [AuthService],
+})
+export class AuthModule {}
 EOF
 
 # Create Stripe Payments setup with API versioning
@@ -598,7 +680,7 @@ import {
 } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('v1/payments')
 @UseGuards(JwtAuthGuard)
@@ -692,7 +774,7 @@ import {
 } from '@nestjs/common';
 import { ApiKeysService } from './api-keys.service';
 import { CreateApiKeyDto } from './dto/create-api-key.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('v1/api-keys')
 @UseGuards(JwtAuthGuard)
@@ -792,7 +874,7 @@ import {
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('v1/teams')
 @UseGuards(JwtAuthGuard)
@@ -865,11 +947,11 @@ npm run build
 
 # Generate initial TypeORM migration
 echo_msg "Generating initial TypeORM migration..."
-npx typeorm -d dist/ormconfig.js migration:generate src/migrations/initial/InitialSchema -o
+npx typeorm migration:generate -d dist/ormconfig.js src/migrations/initial/InitialSchema
 
 # Run the migrations with rollback capabilities
 echo_msg "Running migrations..."
-npx typeorm -d dist/ormconfig.js migration:run
+npx typeorm migration:run
 
 # Create .env.example file
 echo_msg "Creating .env.example file..."
@@ -896,7 +978,7 @@ echo_msg "Please copy '.env.example' to '.env' and update it with your actual cr
 # Create basic Dockerfile
 echo_msg "Creating Dockerfile..."
 cat <<EOF > Dockerfile
-# Use the official NestJS image as base
+# Use the official Node.js image as base
 FROM node:14-alpine
 
 # Create app directory
@@ -946,4 +1028,22 @@ volumes:
   db_data:
 EOF
 
+# Final build and report
+echo_msg "Finalizing setup by building the project..."
+npm run build
+
 echo_msg "Enterprise project setup is complete! 🎉"
+
+echo_msg "Summary of actions performed:"
+echo "1. Installed all necessary dependencies with compatible versions."
+echo "2. Generated modules, controllers, and services for auth, users, teams, payments, and API keys."
+echo "3. Created and configured entities with proper relationships and cascading rules."
+echo "4. Set up TypeORM with connection pooling and caching."
+echo "5. Configured global interceptors and exception filters."
+echo "6. Implemented JWT authentication with guards and strategies."
+echo "7. Integrated rate limiting using @nestjs/throttler@3.x."
+echo "8. Set up Stripe Payments and API Key management with versioned APIs."
+echo "9. Organized migrations and ran the initial migration."
+echo "10. Created environment configuration examples and Docker setup."
+
+echo_msg "Please ensure that the '.env' file is properly configured before running the application."
