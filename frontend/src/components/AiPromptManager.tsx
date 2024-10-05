@@ -16,7 +16,8 @@ const AiPromptManager: React.FC<AiPromptManagerProps> = ({ aiPrompts, setAiPromp
   const [newPromptName, setNewPromptName] = useState('');
   const [newPromptContent, setNewPromptContent] = useState('');
 
-  const handleAddPrompt = () => {
+// @todo: Create an endpoint to save the new prompt
+const handleAddPrompt = () => {
     if (newPromptName.trim() !== '' && newPromptContent.trim() !== '') {
       setAiPrompts([...aiPrompts, { name: newPromptName, content: newPromptContent }]);
       setNewPromptName('');
@@ -24,7 +25,8 @@ const AiPromptManager: React.FC<AiPromptManagerProps> = ({ aiPrompts, setAiPromp
     }
   };
 
-  const handleDeletePrompt = (index: number) => {
+// @todo: Create an endpoint to delete a prompt
+const handleDeletePrompt = (index: number) => {
     const updatedPrompts = aiPrompts.filter((_, i) => i !== index);
     setAiPrompts(updatedPrompts);
   };

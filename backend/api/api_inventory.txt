@@ -1,0 +1,114 @@
+PaymentsController:
+- GET /v1/payments
+  - Description: Retrieve all payments.
+  - Output: List of payments.
+
+- POST /v1/payments
+  - Description: Create a new payment.
+  - Input: CreatePaymentDto
+  - Output: Created payment details.
+
+LeadController:
+- POST /v1/leads
+  - Description: Create a new lead.
+  - Input: CreateLeadDto
+  - Output: Created lead details.
+
+- GET /v1/leads/:id
+  - Description: Retrieve lead by ID.
+  - Output: Lead details.
+
+- PUT /v1/leads/:id
+  - Description: Update a lead.
+  - Input: UpdateLeadDto
+  - Output: Updated lead details.
+
+- DELETE /v1/leads/:id
+  - Description: Delete a lead.
+  - Output: Confirmation message.
+
+- GET /v1/leads
+  - Description: List all leads.
+  - Output: List of leads.
+
+AuthController:
+- POST /v1/auth/register
+  - Description: Register a new user.
+  - Input: RegisterDto
+  - Output: Confirmation message and user details.
+
+- POST /v1/auth/login
+  - Description: Log in a user.
+  - Input: LoginDto
+  - Output: Access token.
+
+- PUT /v1/auth/password-reset
+  - Description: Reset user password.
+  - Input: PasswordResetDto
+  - Output: Confirmation message.
+
+BillingController:
+- POST /v1/billing/subscriptions
+  - Description: Create a new subscription.
+  - Input: CreateSubscriptionDto
+  - Output: Created subscription details.
+
+- GET /v1/billing/subscriptions
+  - Description: Retrieve all subscriptions.
+  - Output: List of subscriptions.
+
+- PUT /v1/billing/subscriptions/:id
+  - Description: Update a subscription.
+  - Input: UpdateSubscriptionDto
+  - Output: Updated subscription details.
+
+- DELETE /v1/billing/subscriptions/:id
+  - Description: Delete a subscription.
+  - Output: Confirmation message.
+
+- GET /v1/billing/payments
+  - Description: Retrieve all payments.
+  - Output: List of payments.
+
+ApiKeysController:
+- GET /v1/api-keys
+  - Description: Retrieve all API keys.
+  - Output: List of API keys.
+
+- POST /v1/api-keys
+  - Description: Create a new API key.
+  - Input: CreateApiKeyDto
+  - Output: Created API key details.
+
+TeamsController:
+- GET /v1/teams
+  - Description: Retrieve all teams.
+  - Output: List of teams.
+
+- POST /v1/teams
+  - Description: Create a new team.
+  - Input: CreateTeamDto
+  - Output: Created team details.
+
+CampaignController:
+- POST /v1/campaigns
+  - Description: Create a new campaign.
+  - Input: CreateCampaignDto
+  - Output: Created campaign details.
+
+- GET /v1/campaigns/:id
+  - Description: Retrieve campaign by ID.
+  - Output: Campaign details.
+
+- PUT /v1/campaigns/:id
+  - Description: Update a campaign.
+  - Input: UpdateCampaignDto
+  - Output: Updated campaign details.
+
+- DELETE /v1/campaigns/:id
+  - Description: Delete a campaign.
+  - Output: Confirmation message.
+
+- GET /v1/campaigns
+  - Description: List all campaigns.
+  - Output: List of campaigns.

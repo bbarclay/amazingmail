@@ -17,7 +17,8 @@ const Templates = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(null);
 
   useEffect(() => {
-    // Fetch templates from API (Replace with real API call)
+// @todo: Create an endpoint to fetch templates from the API
+// Fetch templates from API (Replace with real API call)
     const fetchTemplates = async () => {
       const mockTemplates: TemplateType[] = [
         { id: 1, name: 'Welcome Email' },
@@ -37,7 +38,8 @@ const Templates = () => {
   const confirmDelete = () => {
     setIsModalOpen(false);
     if (selectedTemplate) {
-      // Implement deletion logic here, e.g., call API to delete template
+// @todo: Create an endpoint to delete a template
+// Implement deletion logic here, e.g., call API to delete template
       setTemplates(templates.filter((t) => t.id !== selectedTemplate.id));
       setSelectedTemplate(null);
     }

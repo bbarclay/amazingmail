@@ -17,7 +17,8 @@ const EditLead = () => {
 
   useEffect(() => {
     if (id) {
-      // Fetch lead data by ID and setForm
+// @todo: Create an endpoint to fetch lead data by ID
+// Fetch lead data by ID and setForm
     }
   }, [id]);
 
@@ -38,7 +39,8 @@ const EditLead = () => {
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      // Update lead via API
+// @todo: Create an endpoint to update lead data
+// Update lead via API
     }
   };
 

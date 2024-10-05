@@ -19,7 +19,8 @@ const CampaignsAll = () => {
   const [selectedCampaign, setSelectedCampaign] = useState<CampaignType | null>(null); // Allow null value
 
   useEffect(() => {
-    // Fetch campaigns from API later (example of setting state)
+// @todo: Create an endpoint to fetch campaigns from the API
+// Fetch campaigns from API later (example of setting state)
     const fetchCampaigns = async () => {
       const mockCampaigns: CampaignType[] = [
         { id: 1, name: 'Campaign 1', status: 'Active', dateCreated: '2023-10-03' },
@@ -38,7 +39,8 @@ const CampaignsAll = () => {
   const confirmDelete = () => {
     setIsModalOpen(false);
     if (selectedCampaign) {
-      // Perform deletion logic here, e.g., call API to delete campaign
+// @todo: Create an endpoint to delete a campaign
+// Perform deletion logic here, e.g., call API to delete campaign
       setCampaigns(campaigns.filter((c) => c.id !== selectedCampaign.id));
       setSelectedCampaign(null);
     }
