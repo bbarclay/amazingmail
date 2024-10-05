@@ -17,7 +17,12 @@ const AllLeads = () => {
   const [leads, setLeads] = useState<LeadType[]>([]); // State type definition
 
   useEffect(() => {
+<<<<<<< .merge_file_6P70GL
+// @todo: Create an endpoint to fetch leads from the API
+// Fetch leads from API (replace with actual API call)
+=======
     // Fetch leads from API (replace with actual API call)
+>>>>>>> .merge_file_eYLpH4
     const fetchLeads = async () => {
       // Example mock data
       const mockLeads: LeadType[] = [

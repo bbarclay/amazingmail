@@ -31,7 +31,12 @@ export default function Analytics() {
     }),
   ];
 
+<<<<<<< .merge_file_ywt1sH
+// @todo: Create an endpoint to fetch analytics data from the API
+// Sample data for the analytics table
+=======
   // Sample data for the analytics table
+>>>>>>> .merge_file_8hmZm6
   const data = [
     { email: 'test1@example.com', sent: true, opened: true, clicked: false },
     { email: 'test2@example.com', sent: true, opened: false, clicked: false },
