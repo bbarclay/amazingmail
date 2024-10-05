@@ -46,6 +46,22 @@ await queryRunner.createTable(new Table({
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
         },
+        {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
+        },
+    ],
+    indices: [
+        {
+            name: 'IDX_notifications_logs_notification_id',
+            columnNames: ['notification_id'],
+        },
+        {
+            name: 'IDX_notifications_logs_status',
+            columnNames: ['status'],
+        },
     ],
 }));
 

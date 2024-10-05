@@ -26,6 +26,11 @@ await queryRunner.createTable(new Table({
             type: 'varchar',
         },
         {
+            name: 'description',
+            type: 'text',
+            isNullable: true,
+        },
+        {
             name: 'changes',
             type: 'json',
             isNullable: true,
@@ -36,9 +41,31 @@ await queryRunner.createTable(new Table({
             isNullable: true,
         },
         {
-            name: 'timestamp',
+            name: 'created_at',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
+        },
+    ],
+    indices: [
+        {
+            name: 'IDX_audit_trail_entity',
+            columnNames: ['entity'],
+        },
+        {
+            name: 'IDX_audit_trail_entity_id',
+            columnNames: ['entity_id'],
+        },
+        {
+            name: 'IDX_audit_trail_action',
+            columnNames: ['action'],
+        },
+        {
+            name: 'IDX_audit_trail_performed_by',
+            columnNames: ['performed_by'],
+        },
+        {
+            name: 'IDX_audit_trail_created_at',
+            columnNames: ['created_at'],
         },
     ],
 }));

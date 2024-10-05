@@ -19,6 +19,16 @@ await queryRunner.createTable(new Table({
             isNullable: true,
         },
         {
+            name: 'ip_address',
+            type: 'varchar',
+            isNullable: true,
+        },
+        {
+            name: 'endpoint',
+            type: 'varchar',
+            isNullable: true,
+        },
+        {
             name: 'limit',
             type: 'integer',
         },
@@ -39,6 +49,26 @@ await queryRunner.createTable(new Table({
             name: 'created_at',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
+        },
+        {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
+        },
+    ],
+    indices: [
+        {
+            name: 'IDX_rate_limits_user_id',
+            columnNames: ['user_id'],
+        },
+        {
+            name: 'IDX_rate_limits_ip_address',
+            columnNames: ['ip_address'],
+        },
+        {
+            name: 'IDX_rate_limits_endpoint',
+            columnNames: ['endpoint'],
         },
     ],
 }));

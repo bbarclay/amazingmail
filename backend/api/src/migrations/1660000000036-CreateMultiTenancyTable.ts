@@ -19,14 +19,40 @@ await queryRunner.createTable(new Table({
             isUnique: true,
         },
         {
+            name: 'name',
+            type: 'varchar',
+        },
+        {
+            name: 'domain',
+            type: 'varchar',
+            isUnique: true,
+        },
+        {
             name: 'config',
             type: 'json',
             isNullable: true,
         },
         {
+            name: 'is_active',
+            type: 'boolean',
+            default: true,
+        },
+        {
             name: 'created_at',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
+        },
+        {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
+        },
+    ],
+    indices: [
+        {
+            name: 'IDX_multi_tenancy_tenant_id',
+            columnNames: ['tenant_id'],
         },
     ],
 }));

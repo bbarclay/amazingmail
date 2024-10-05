@@ -19,9 +19,26 @@ await queryRunner.createTable(new Table({
             isUnique: true,
         },
         {
+            name: 'description',
+            type: 'text',
+            isNullable: true,
+        },
+        {
             name: 'created_at',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
+        },
+        {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
+        },
+    ],
+    indices: [
+        {
+            name: 'IDX_tags_name',
+            columnNames: ['name'],
         },
     ],
 }));
