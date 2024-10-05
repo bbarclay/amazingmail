@@ -1,0 +1,8 @@
+#install postgres locally, and connect to it, even if it's in docker. I don't care. just install it, connect, seed the data in there, turn on the endpoint, hook it up to the frontend, NPM run 
+
+#this app will be finished, when 
+1. backend/api/ will turn on, run through all test. spin up a postgres database for testing. 
+2. IT will migrate the databse, seed the database, 
+3. The frontend features, will all be hooked up to the backend apis. the todos_checklist.txt will all be completed. 
+4. All features and functionality in the frontend will test, because they will be fed by seeded data in the backend api. 
+5. Need to create a plan to get closer and closer to that. 

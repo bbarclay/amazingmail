@@ -16,7 +16,12 @@ const AiPromptManager: React.FC<AiPromptManagerProps> = ({ aiPrompts, setAiPromp
   const [newPromptName, setNewPromptName] = useState('');
   const [newPromptContent, setNewPromptContent] = useState('');
 
+<<<<<<< .merge_file_AXEFRR
+// @todo: Create an endpoint to save the new prompt
+const handleAddPrompt = () => {
+=======
   const handleAddPrompt = () => {
+>>>>>>> .merge_file_B0O6nw
     if (newPromptName.trim() !== '' && newPromptContent.trim() !== '') {
       setAiPrompts([...aiPrompts, { name: newPromptName, content: newPromptContent }]);
       setNewPromptName('');
@@ -24,7 +29,12 @@ const AiPromptManager: React.FC<AiPromptManagerProps> = ({ aiPrompts, setAiPromp
     }
   };
 
+<<<<<<< .merge_file_AXEFRR
+// @todo: Create an endpoint to delete a prompt
+const handleDeletePrompt = (index: number) => {
+=======
   const handleDeletePrompt = (index: number) => {
+>>>>>>> .merge_file_B0O6nw
     const updatedPrompts = aiPrompts.filter((_, i) => i !== index);
     setAiPrompts(updatedPrompts);
   };
@@ -73,4 +83,8 @@ const AiPromptManager: React.FC<AiPromptManagerProps> = ({ aiPrompts, setAiPromp
   );
 };
 
+<<<<<<< .merge_file_AXEFRR
 export default AiPromptManager;
+=======
+export default AiPromptManager;
+>>>>>>> .merge_file_B0O6nw

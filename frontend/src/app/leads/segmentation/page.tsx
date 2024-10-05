@@ -8,7 +8,12 @@ const LeadSegmentation = () => {
   const [criteria, setCriteria] = useState('');
 
   const handleCreateSegment = () => {
+<<<<<<< .merge_file_pznO8T
+// @todo: Create an endpoint for adding a new segment
+// Implement the logic to create a new segment using newSegmentName and criteria
+=======
     // Implement the logic to create a new segment using newSegmentName and criteria
+>>>>>>> .merge_file_h9NlUg
     console.log('Creating segment:', newSegmentName, criteria);
   };
 

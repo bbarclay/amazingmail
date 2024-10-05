@@ -17,7 +17,12 @@ const Templates = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(null);
 
   useEffect(() => {
+<<<<<<< .merge_file_5hGg2x
+// @todo: Create an endpoint to fetch templates from the API
+// Fetch templates from API (Replace with real API call)
+=======
     // Fetch templates from API (Replace with real API call)
+>>>>>>> .merge_file_jfbD3W
     const fetchTemplates = async () => {
       const mockTemplates: TemplateType[] = [
         { id: 1, name: 'Welcome Email' },
@@ -37,7 +42,12 @@ const Templates = () => {
   const confirmDelete = () => {
     setIsModalOpen(false);
     if (selectedTemplate) {
+<<<<<<< .merge_file_5hGg2x
+// @todo: Create an endpoint to delete a template
+// Implement deletion logic here, e.g., call API to delete template
+=======
       // Implement deletion logic here, e.g., call API to delete template
+>>>>>>> .merge_file_jfbD3W
       setTemplates(templates.filter((t) => t.id !== selectedTemplate.id));
       setSelectedTemplate(null);
     }

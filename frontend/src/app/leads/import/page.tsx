@@ -18,7 +18,12 @@ const ImportLeads = () => {
     if (file) {
       setImporting(true); // Set importing status to true
       try {
+<<<<<<< .merge_file_Oxlhfp
+// @todo: Create an endpoint for importing leads from a CSV file
+// Handle file upload and import leads
+=======
         // Handle file upload and import leads
+>>>>>>> .merge_file_lhzwyR
         console.log('Importing file:', file.name);
         // Simulate file import process
         await new Promise((resolve) => setTimeout(resolve, 2000));
