@@ -21,7 +21,7 @@ export class UserService {
   ) {}
 
   async updateProfile(updateProfileDto: UpdateProfileDto): Promise<User> {
-    const user = await this.userRepository.findOne(updateProfileDto.id);
+const user = await this.userRepository.findOne({ where: { id: updateProfileDto.id } });
     if (!user) {
       throw new Error('User not found');
     }
@@ -43,12 +43,12 @@ export class UserService {
     await this.userRepository.delete(id);
   }
 
-  async getUserById(id: string): Promise<User> {
-    return this.userRepository.findOne(id);
+async getUserById(id: string): Promise<User> {
+    return this.userRepository.findOne({ where: { id } });
   }
 
   async getConnectedAccounts(userId: string): Promise<ConnectedAccount[]> {
-    return this.connectedAccountRepository.find({ where: { userId } });
+return this.connectedAccountRepository.find({ where: { user: { id: userId } } });
   }
 
 }

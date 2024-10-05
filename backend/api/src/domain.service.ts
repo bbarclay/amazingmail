@@ -24,7 +24,7 @@ export class DomainService {
 
   async updateDomain(id: string, updateDomainDto: UpdateDomainDto): Promise<Domain> {
     await this.domainRepository.update(id, updateDomainDto);
-    return this.domainRepository.findOne(id);
+return this.domainRepository.findOne({ where: { id } });
   }
 
   async deleteDomain(id: string): Promise<void> {

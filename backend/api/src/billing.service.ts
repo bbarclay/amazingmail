@@ -27,7 +27,7 @@ export class BillingService {
 
   async updateSubscription(id: string, updateSubscriptionDto: UpdateSubscriptionDto): Promise<Subscription> {
     await this.subscriptionRepository.update(id, updateSubscriptionDto);
-    return this.subscriptionRepository.findOne(id);
+return this.subscriptionRepository.findOne({ where: { id } });
   }
 
   async deleteSubscription(id: string): Promise<void> {

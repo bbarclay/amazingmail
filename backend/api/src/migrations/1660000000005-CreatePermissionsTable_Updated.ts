@@ -1,51 +1,54 @@
+import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm';
 
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-
-export class LeadManagementMigration2024 implements MigrationInterface {
+export class CreatePermissionsTable1660000000005 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
-        // Create the Leads table
         await queryRunner.createTable(new Table({
-            name: 'leads',
+            name: 'permissions',
             columns: [
                 {
                     name: 'id',
                     type: 'uuid',
                     isPrimary: true,
                     generationStrategy: 'uuid',
+                    default: 'uuid_generate_v4()',
                 },
                 {
                     name: 'name',
                     type: 'varchar',
-                },
-                {
-                    name: 'email',
-                    type: 'varchar',
                     isUnique: true,
                 },
                 {
-                    name: 'company',
-                    type: 'varchar',
+                    name: 'description',
+                    type: 'text',
+                    isNullable: true,
                 },
                 {
-                    name: 'status',
-                    type: 'varchar',
+                    name: 'is_active',
+                    type: 'boolean',
+                    default: true,
                 },
                 {
-                    name: 'createdAt',
+                    name: 'created_at',
                     type: 'timestamp',
                     default: 'CURRENT_TIMESTAMP',
                 },
                 {
-                    name: 'updatedAt',
+                    name: 'updated_at',
                     type: 'timestamp',
                     default: 'CURRENT_TIMESTAMP',
                 },
             ],
         }));
+
+        // Add index for name
+        await queryRunner.createIndex('permissions', new TableIndex({
+            name: 'IDX_PERMISSIONS_NAME',
+            columnNames: ['name'],
+        }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        // Drop the Leads table
-        await queryRunner.dropTable('leads');
+        // Drop permissions table
+        await queryRunner.dropTable('permissions');
     }
 }

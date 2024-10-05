@@ -8,6 +8,7 @@ import {
   Post,
   HttpCode,
   HttpStatus,
+  Get,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
