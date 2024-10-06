@@ -3,7 +3,7 @@
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-![image_files](readme_files/amazingmail.webp)
+![image_files](image_files/amazingmail.webp)
 
 ## Overview
 AmazingMail is a cold email system that empowers users to manage and automate their email outreach efforts effectively. With its user-friendly interface and powerful features, AmazingMail is designed to help businesses and marketers maximize their cold emailing strategies.
@@ -39,7 +39,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ## Screenshots
 
-![image_files](readme_files/appscreen.png)
+![image_files](image_files/appscreen.png)
 
 ## License
 
