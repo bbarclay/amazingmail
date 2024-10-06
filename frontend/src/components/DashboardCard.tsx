@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Ucard';
 
 const DashboardCard = ({ title, value }: { title: string; value: string }) => (
   <Card className="shadow-md">
