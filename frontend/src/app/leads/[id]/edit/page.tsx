@@ -17,12 +17,8 @@ const EditLead = () => {
 
   useEffect(() => {
     if (id) {
-<<<<<<< .merge_file_3L89zK
 // @todo: Create an endpoint to fetch lead data by ID
 // Fetch lead data by ID and setForm
-=======
-      // Fetch lead data by ID and setForm
->>>>>>> .merge_file_5C1vCl
     }
   }, [id]);
 
@@ -43,12 +39,8 @@ const EditLead = () => {
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-<<<<<<< .merge_file_3L89zK
 // @todo: Create an endpoint to update lead data
 // Update lead via API
-=======
-      // Update lead via API
->>>>>>> .merge_file_5C1vCl
     }
   };
 
