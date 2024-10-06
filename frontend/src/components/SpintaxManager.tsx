@@ -16,12 +16,8 @@ const SpintaxManager: React.FC<SpintaxManagerProps> = ({ spintaxTemplates, setSp
   const [newSpintaxName, setNewSpintaxName] = useState('');
   const [newSpintaxContent, setNewSpintaxContent] = useState('');
 
-<<<<<<< .merge_file_DXNwWz
 // @todo: Create an endpoint to save the new spintax
 const handleAddSpintax = () => {
-=======
-  const handleAddSpintax = () => {
->>>>>>> .merge_file_xzBwEm
     if (newSpintaxName.trim() !== '' && newSpintaxContent.trim() !== '') {
       setSpintaxTemplates([...spintaxTemplates, { name: newSpintaxName, content: newSpintaxContent }]);
       setNewSpintaxName('');
@@ -29,12 +25,8 @@ const handleAddSpintax = () => {
     }
   };
 
-<<<<<<< .merge_file_DXNwWz
 // @todo: Create an endpoint to delete a spintax
 const handleDeleteSpintax = (index: number) => {
-=======
-  const handleDeleteSpintax = (index: number) => {
->>>>>>> .merge_file_xzBwEm
     const updatedSpintax = spintaxTemplates.filter((_, i) => i !== index);
     setSpintaxTemplates(updatedSpintax);
   };
