@@ -27,12 +27,8 @@ const CreateDomain = () => {
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-<<<<<<< .merge_file_Td1Bs7
 // @todo: Create an endpoint for adding a new domain
 // Submit form data to API
-=======
-      // Submit form data to API
->>>>>>> .merge_file_CQVJiY
     }
   };
 
