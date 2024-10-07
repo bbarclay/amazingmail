@@ -11,6 +11,9 @@ import { Team } from './team.entity';
 import { ApiKey } from './api-key.entity';
 import { Payment } from './payment.entity';
 import { BaseEntity } from './base.entity';
+import { ConnectedAccount } from './connected-account.entity';
+import { Domain } from './domain.entity';
+import { Subscription } from './subscription.entity';
 
 @Entity()
 @Index(['email', 'resetPasswordToken'])
@@ -49,4 +52,22 @@ export class User extends BaseEntity {
     onDelete: 'CASCADE',
   })
   payments: Payment[];
+
+  @OneToMany(() => ConnectedAccount, (connectedAccount) => connectedAccount.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  connectedAccounts: ConnectedAccount[];
+
+  @OneToMany(() => Domain, (domain) => domain.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  domains: Domain[];
+
+  @OneToMany(() => Subscription, (subscription) => subscription.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  subscriptions: Subscription[];
 }

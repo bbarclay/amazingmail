@@ -31,7 +31,8 @@ export default function Analytics() {
     }),
   ];
 
-  // Sample data for the analytics table
+// @todo: Create an endpoint to fetch analytics data from the API
+// Sample data for the analytics table
   const data = [
     { email: 'test1@example.com', sent: true, opened: true, clicked: false },
     { email: 'test2@example.com', sent: true, opened: false, clicked: false },

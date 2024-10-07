@@ -41,7 +41,8 @@ export default function BillingSettings() {
         getCoreRowModel: getCoreRowModel(),
     });
 
-    return (
+// @todo: Create an endpoint to manage subscription plans
+return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Billing Settings</h1>
 
@@ -58,14 +59,16 @@ export default function BillingSettings() {
                 <button className="mt-1 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Upgrade/Downgrade Plan</button>
             </div>
 
-            {/* Payment Information Section */}
+{/* // @todo: Create an endpoint to update payment information */}
+{/* Payment Information Section */}
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow mb-4">
                 <h2 className="text-lg font-medium mb-2">Payment Information</h2>
                 <p className="text-gray-700 dark:text-gray-300">Card Ending In: **** **** **** 1234</p>
                 <button className="mt-1 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Update Payment Information</button>
             </div>
 
-            {/* Billing History Section */}
+{/* // @todo: Create an endpoint to fetch billing history */}
+{/* Billing History Section */}
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
                 <h2 className="text-lg font-medium mb-2">Billing History</h2>
                 {/* Table to display billing history */}

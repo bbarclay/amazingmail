@@ -18,7 +18,8 @@ const ImportLeads = () => {
     if (file) {
       setImporting(true); // Set importing status to true
       try {
-        // Handle file upload and import leads
+// @todo: Create an endpoint for importing leads from a CSV file
+// Handle file upload and import leads
         console.log('Importing file:', file.name);
         // Simulate file import process
         await new Promise((resolve) => setTimeout(resolve, 2000));

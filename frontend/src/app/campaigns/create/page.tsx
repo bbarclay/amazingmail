@@ -40,7 +40,8 @@ const CreateCampaign = () => {
 
     // Check if there are no validation errors
     if (Object.keys(validationErrors).length === 0) {
-      // Submit form data to the API
+// @todo: Create an endpoint for creating a new campaign
+// Submit form data to the API
       console.log('Form submitted:', form);
       // You can implement API submission or navigation logic here
     }

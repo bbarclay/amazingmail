@@ -27,7 +27,8 @@ const CreateDomain = () => {
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      // Submit form data to API
+// @todo: Create an endpoint for adding a new domain
+// Submit form data to API
     }
   };
 
