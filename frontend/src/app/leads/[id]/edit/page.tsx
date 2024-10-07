@@ -6,7 +6,7 @@ import { useRouter, useParams } from 'next/navigation';
 const EditLead = () => {
   const router = useRouter();
   const params = useParams();
-  const { id } = params;
+  const id = params?.id as string;
   const [form, setForm] = useState<{ name: string; email: string; company: string; status: string }>({
     name: '',
     email: '',
@@ -17,8 +17,8 @@ const EditLead = () => {
 
   useEffect(() => {
     if (id) {
-// @todo: Create an endpoint to fetch lead data by ID
-// Fetch lead data by ID and setForm
+      // @todo: Create an endpoint to fetch lead data by ID
+      // Fetch lead data by ID and setForm
     }
   }, [id]);
 
@@ -39,8 +39,8 @@ const EditLead = () => {
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-// @todo: Create an endpoint to update lead data
-// Update lead via API
+      // @todo: Create an endpoint to update lead data
+      // Update lead via API
     }
   };
 

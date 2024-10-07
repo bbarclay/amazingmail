@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FaGoogle, FaFacebook, FaApple } from 'react-icons/fa';
+import { FaGoogle, FaLinkedin } from 'react-icons/fa';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Image from 'next/image';
 
@@ -18,9 +18,34 @@ export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
 
+  const validateInputs = () => {
+    if (!email) {
+      setError('Email is required');
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError('Invalid email format');
+      return false;
+    }
+    if (!password) {
+      setError('Password is required');
+      return false;
+    }
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    if (!validateInputs()) {
+      return;
+    }
+
     setLoading(true);
     try {
       await login(email, password);
@@ -38,6 +63,28 @@ export default function LoginPage() {
     console.log(`Logging in with ${provider}`);
   };
 
+  const handleForgotPassword = () => {
+    // Implement forgot password logic here
+    console.log('Forgot password clicked');
+    // You would typically redirect to a password reset page or show a modal
+    router.push('/forgot-password');
+  };
+
+  const getPasswordStrength = (password: string) => {
+    const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
+    const mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+
+    if (strongRegex.test(password)) {
+      return 'Strong';
+    } else if (mediumRegex.test(password)) {
+      return 'Medium';
+    } else {
+      return 'Weak';
+    }
+  };
+
+  const passwordStrength = getPasswordStrength(password);
+
   return (
     <section className="flex flex-col lg:flex-row min-h-screen bg-gray-100 dark:bg-gray-800">
       {/* Left Section */}
@@ -45,8 +92,8 @@ export default function LoginPage() {
         <header className="mb-8 text-center">
           <Image src="/assets/images/logo/logo-color.svg" width={200} height={50} className="block dark:hidden mb-4" alt="Logo" />
           <Image src="/assets/images/logo/logo-white.svg" width={200} height={50} className="hidden dark:block mb-4" alt="Logo" />
-          <h2 className="text-4xl font-semibold text-gray-800 dark:text-white">Sign In to Tailwinds</h2>
-          <p className="text-base text-gray-600 dark:text-gray-300">Send, spend, and save smarter</p>
+          <h2 className="text-4xl font-semibold text-gray-800 dark:text-white">Sign In to AmazingMail</h2>
+          <p className="text-base text-gray-600 dark:text-gray-300">Access your cold email system</p>
         </header>
 
         {error && (
@@ -85,6 +132,11 @@ export default function LoginPage() {
               required
               aria-required="true"
             />
+            {password && (
+              <div className={`text-sm mt-1 ${passwordStrength === 'Strong' ? 'text-green-600' : passwordStrength === 'Medium' ? 'text-yellow-600' : 'text-red-600'}`}>
+                Password strength: {passwordStrength}
+              </div>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <label className="inline-flex items-center text-sm text-gray-700 dark:text-gray-200">
@@ -96,7 +148,13 @@ export default function LoginPage() {
               />
               <span className="ml-2">Remember me</span>
             </label>
-            <a href="#" className="text-sm text-blue-600 hover:underline dark:text-blue-400">Forgot password?</a>
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+            >
+              Forgot password?
+            </button>
           </div>
           <button
             type="submit"
@@ -126,20 +184,12 @@ export default function LoginPage() {
             Sign In with Google
           </button>
           <button
-            onClick={() => handleSocialLogin('Facebook')}
+            onClick={() => handleSocialLogin('LinkedIn')}
             className="inline-flex justify-center items-center gap-x-2 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-base text-gray-800 dark:text-white font-medium"
-            aria-label="Login with Facebook"
+            aria-label="Login with LinkedIn"
           >
-            <FaFacebook className="text-blue-600" />
-            Sign In with Facebook
-          </button>
-          <button
-            onClick={() => handleSocialLogin('Apple')}
-            className="inline-flex justify-center items-center gap-x-2 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-base text-gray-800 dark:text-white font-medium"
-            aria-label="Login with Apple"
-          >
-            <FaApple className="text-black" />
-            Sign In with Apple
+            <FaLinkedin className="text-blue-600" />
+            Sign In with LinkedIn
           </button>
         </div>
 
@@ -151,10 +201,10 @@ export default function LoginPage() {
       {/* Right Section - Illustration or Additional Info */}
       <div className="lg:w-1/2 lg:block hidden bg-[#F6FAFF] dark:bg-gray-600 p-20 relative">
         <Image src="/assets/images/illustration/signin.svg" width={500} height={500} alt="Sign In Illustration" className="mx-auto" />
-        <h3 className="text-bgray-900 dark:text-white font-semibold text-4xl mb-4 text-center">Speedy, Easy, and Fast</h3>
+        <h3 className="text-bgray-900 dark:text-white font-semibold text-4xl mb-4 text-center">Streamline Your Cold Email Campaigns</h3>
         <p className="text-bgray-600 dark:text-bgray-50 text-sm font-medium text-center">
-          BankCo. helps you set saving goals, earn cash back offers, and receive paychecks up to two days early.
-          Get a <span className="text-success-300 font-bold">$20</span> bonus when you receive qualifying direct deposits.
+          AmazingMail helps you create, manage, and optimize your cold email campaigns for better results.
+          Get started today and see the difference in your outreach efforts.
         </p>
       </div>
     </section>
