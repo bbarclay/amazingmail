@@ -1,22 +1,26 @@
-import { MigrationInterface, QueryRunner, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, TableForeignKey, Table } from "typeorm";
 
 export class AddAllForeignKeyConstraints1660000000099 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         const addForeignKeyIfNotExists = async (tableName: string, foreignKey: TableForeignKey) => {
             const tableExists = await queryRunner.hasTable(tableName);
             if (!tableExists) {
-                console.log();
+                console.log(`Table ${tableName} does not exist. Skipping foreign key creation.`);
                 return;
             }
 
             const table = await queryRunner.getTable(tableName);
-            const existingForeignKey = table.foreignKeys.find(fk => 
-                fk.columnNames.join(',') === foreignKey.columnNames.join(',') &&
-                fk.referencedTableName === foreignKey.referencedTableName &&
-                fk.referencedColumnNames.join(',') === foreignKey.referencedColumnNames.join(',')
-            );
-            if (!existingForeignKey) {
-                await queryRunner.createForeignKey(tableName, foreignKey);
+            if (table) {
+                const existingForeignKey = table.foreignKeys.find(fk => 
+                    fk.columnNames.join(',') === foreignKey.columnNames.join(',') &&
+                    fk.referencedTableName === foreignKey.referencedTableName &&
+                    fk.referencedColumnNames.join(',') === foreignKey.referencedColumnNames.join(',')
+                );
+                if (!existingForeignKey) {
+                    await queryRunner.createForeignKey(tableName, foreignKey);
+                }
+            } else {
+                console.log(`Table ${tableName} could not be retrieved. Skipping foreign key creation.`);
             }
         };
 
@@ -66,11 +70,16 @@ export class AddAllForeignKeyConstraints1660000000099 implements MigrationInterf
             const tableExists = await queryRunner.hasTable(table);
             if (tableExists) {
                 const tableObj = await queryRunner.getTable(table);
-                const foreignKeys = tableObj.foreignKeys;
-                for (const foreignKey of foreignKeys) {
-                    await queryRunner.dropForeignKey(table, foreignKey);
+                if (tableObj) {
+                    const foreignKeys = tableObj.foreignKeys;
+                    for (const foreignKey of foreignKeys) {
+                        await queryRunner.dropForeignKey(table, foreignKey);
+                    }
+                } else {
+                    console.log(`Table ${table} could not be retrieved. Skipping foreign key removal.`);
                 }
             }
         }
     }
 }
+

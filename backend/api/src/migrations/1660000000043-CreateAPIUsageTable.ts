@@ -92,12 +92,13 @@ export class CreateAPIUsageTable1660000000043 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable('api_usage');
-        const foreignKeys = table.foreignKeys;
-
-        for (const foreignKey of foreignKeys) {
-            await queryRunner.dropForeignKey('api_usage', foreignKey);
+        if (table) {
+            const foreignKeys = table.foreignKeys;
+            for (const foreignKey of foreignKeys) {
+                await queryRunner.dropForeignKey('api_usage', foreignKey);
+            }
         }
-
         await queryRunner.dropTable('api_usage');
     }
 }
+

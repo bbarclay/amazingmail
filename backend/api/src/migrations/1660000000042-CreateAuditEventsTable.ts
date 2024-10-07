@@ -79,12 +79,13 @@ export class CreateAuditEventsTable1660000000042 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable('audit_events');
-        const foreignKeys = table.foreignKeys;
-
-        for (const foreignKey of foreignKeys) {
-            await queryRunner.dropForeignKey('audit_events', foreignKey);
+        if (table) {
+            const foreignKeys = table.foreignKeys;
+            for (const foreignKey of foreignKeys) {
+                await queryRunner.dropForeignKey('audit_events', foreignKey);
+            }
         }
-
         await queryRunner.dropTable('audit_events');
     }
 }
+
