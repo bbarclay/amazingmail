@@ -3,19 +3,24 @@
 "use client";
 
 import '../styles/globals.css';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { ThemeProvider } from 'next-themes';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import AuthenticatedLayout from './authenticated-layout';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 function RootLayoutContent({ children }: { children: ReactNode }) {
   const { isAuthenticated } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated && pathname !== '/login') {
+      router.push('/login');
+    }
+  }, [isAuthenticated, pathname, router]);
 
   if (!isAuthenticated && pathname !== '/login') {
-    // Redirect to login page
-    window.location.href = '/login';
     return null;
   }
 
