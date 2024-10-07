@@ -34,6 +34,9 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   resetPasswordExpires?: Date;
 
+  @Column({ nullable: true })
+  profileImageUrl?: string;
+
   @ManyToMany(() => Team, (team) => team.users, {
     cascade: true,
     onDelete: 'CASCADE',
@@ -71,3 +74,4 @@ export class User extends BaseEntity {
   })
   subscriptions: Subscription[];
 }
+
