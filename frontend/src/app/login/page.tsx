@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { FaGoogle, FaFacebook, FaApple } from 'react-icons/fa';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -22,11 +23,11 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      await login(email, password, remember);
+      await login(email, password);
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login failed:', error);
-      setError(error.message || 'Login failed. Please try again.');
+      setError(error instanceof Error ? error.message : 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -42,8 +43,8 @@ export default function LoginPage() {
       {/* Left Section */}
       <div className="lg:w-1/2 p-10 flex flex-col justify-center">
         <header className="mb-8 text-center">
-          <img src="/assets/images/logo/logo-color.svg" className="block dark:hidden mb-4" alt="Logo" />
-          <img src="/assets/images/logo/logo-white.svg" className="hidden dark:block mb-4" alt="Logo" />
+          <Image src="/assets/images/logo/logo-color.svg" width={200} height={50} className="block dark:hidden mb-4" alt="Logo" />
+          <Image src="/assets/images/logo/logo-white.svg" width={200} height={50} className="hidden dark:block mb-4" alt="Logo" />
           <h2 className="text-4xl font-semibold text-gray-800 dark:text-white">Sign In to Tailwinds</h2>
           <p className="text-base text-gray-600 dark:text-gray-300">Send, spend, and save smarter</p>
         </header>
@@ -143,13 +144,13 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-gray-600 dark:text-gray-300">
-          Don’t have an account? <a href="/signup" className="font-semibold underline text-blue-600 dark:text-blue-400">Sign Up</a>
+          Don&apos;t have an account? <a href="/signup" className="font-semibold underline text-blue-600 dark:text-blue-400">Sign Up</a>
         </p>
       </div>
 
       {/* Right Section - Illustration or Additional Info */}
       <div className="lg:w-1/2 lg:block hidden bg-[#F6FAFF] dark:bg-gray-600 p-20 relative">
-        <img src="/assets/images/illustration/signin.svg" alt="Sign In Illustration" className="mx-auto" />
+        <Image src="/assets/images/illustration/signin.svg" width={500} height={500} alt="Sign In Illustration" className="mx-auto" />
         <h3 className="text-bgray-900 dark:text-white font-semibold text-4xl mb-4 text-center">Speedy, Easy, and Fast</h3>
         <p className="text-bgray-600 dark:text-bgray-50 text-sm font-medium text-center">
           BankCo. helps you set saving goals, earn cash back offers, and receive paychecks up to two days early.
@@ -159,3 +160,4 @@ export default function LoginPage() {
     </section>
   );
 }
+
