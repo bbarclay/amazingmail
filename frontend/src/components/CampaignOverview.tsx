@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent, Typography, List, ListItem, ListItemText } from '@mui/material';
 
 const CampaignOverview: React.FC = () => {
   // Mock data - replace with actual data fetching logic
@@ -10,32 +9,25 @@ const CampaignOverview: React.FC = () => {
   ];
 
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Campaign Overview
-        </Typography>
-        <List>
-          {campaigns.map((campaign) => (
-            <ListItem key={campaign.id} divider>
-              <ListItemText
-                primary={campaign.name}
-                secondary={
-                  <React.Fragment>
-                    <Typography component="span" variant="body2" color="text.primary">
-                      Status: {campaign.status}
-                    </Typography>
-                    {' — '}
-                    Sent: {campaign.sentEmails}, Open Rate: {campaign.openRate}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
-      </CardContent>
-    </Card>
+    <div className="bg-white shadow rounded-lg p-4">
+      <h2 className="text-xl font-semibold mb-4">Campaign Overview</h2>
+      <ul className="divide-y divide-gray-200">
+        {campaigns.map((campaign) => (
+          <li key={campaign.id} className="py-4">
+            <div className="flex justify-between">
+              <div>
+                <h3 className="text-lg font-medium text-gray-900">{campaign.name}</h3>
+                <p className="text-sm text-gray-500">
+                  Status: {campaign.status} | Sent: {campaign.sentEmails} | Open Rate: {campaign.openRate}
+                </p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
 export default CampaignOverview;
+

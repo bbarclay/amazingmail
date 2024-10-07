@@ -47,7 +47,7 @@ const SignUpPage: React.FC = () => {
 
       if (error) throw error;
 
-      if (data) {
+      if (data && data.user) {
         // Insert additional user data into the users table
         const { error: profileError } = await supabase
           .from('users')
@@ -63,6 +63,8 @@ const SignUpPage: React.FC = () => {
         if (profileError) throw profileError;
 
         router.push('/dashboard');
+      } else {
+        throw new Error('User data is missing after signup');
       }
     } catch (error) {
       if (error instanceof Error) {

@@ -2,15 +2,29 @@
 import React, { useState } from 'react';
 import Layout from '../../../components/Layout';
 
+interface Segment {
+  id: string;
+  name: string;
+  criteria: string;
+}
+
 const LeadSegmentation = () => {
-  const [segments] = useState([]); // Removed `setSegments` as it's not used
+  const [segments, setSegments] = useState<Segment[]>([]); // Added type annotation
   const [newSegmentName, setNewSegmentName] = useState('');
   const [criteria, setCriteria] = useState('');
 
   const handleCreateSegment = () => {
-// @todo: Create an endpoint for adding a new segment
-// Implement the logic to create a new segment using newSegmentName and criteria
+    // @todo: Create an endpoint for adding a new segment
+    // Implement the logic to create a new segment using newSegmentName and criteria
+    const newSegment: Segment = {
+      id: Date.now().toString(), // Temporary ID generation
+      name: newSegmentName,
+      criteria: criteria
+    };
+    setSegments([...segments, newSegment]);
     console.log('Creating segment:', newSegmentName, criteria);
+    setNewSegmentName('');
+    setCriteria('');
   };
 
   return (
@@ -58,3 +72,4 @@ const LeadSegmentation = () => {
 };
 
 export default LeadSegmentation;
+
