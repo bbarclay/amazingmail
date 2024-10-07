@@ -16,7 +16,8 @@ const SpintaxManager: React.FC<SpintaxManagerProps> = ({ spintaxTemplates, setSp
   const [newSpintaxName, setNewSpintaxName] = useState('');
   const [newSpintaxContent, setNewSpintaxContent] = useState('');
 
-  const handleAddSpintax = () => {
+// @todo: Create an endpoint to save the new spintax
+const handleAddSpintax = () => {
     if (newSpintaxName.trim() !== '' && newSpintaxContent.trim() !== '') {
       setSpintaxTemplates([...spintaxTemplates, { name: newSpintaxName, content: newSpintaxContent }]);
       setNewSpintaxName('');
@@ -24,7 +25,8 @@ const SpintaxManager: React.FC<SpintaxManagerProps> = ({ spintaxTemplates, setSp
     }
   };
 
-  const handleDeleteSpintax = (index: number) => {
+// @todo: Create an endpoint to delete a spintax
+const handleDeleteSpintax = (index: number) => {
     const updatedSpintax = spintaxTemplates.filter((_, i) => i !== index);
     setSpintaxTemplates(updatedSpintax);
   };

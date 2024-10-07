@@ -8,7 +8,8 @@ const LeadSegmentation = () => {
   const [criteria, setCriteria] = useState('');
 
   const handleCreateSegment = () => {
-    // Implement the logic to create a new segment using newSegmentName and criteria
+// @todo: Create an endpoint for adding a new segment
+// Implement the logic to create a new segment using newSegmentName and criteria
     console.log('Creating segment:', newSegmentName, criteria);
   };
 

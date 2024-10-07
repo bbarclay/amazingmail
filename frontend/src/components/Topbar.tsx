@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiMenu, FiSearch, FiBell } from 'react-icons/fi';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/Ubutton';
+import { Input } from '@/components/ui/Uinput';
 import DarkModeToggle from '@/components/ui/DarkModeToggle';
 
 const Topbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => (

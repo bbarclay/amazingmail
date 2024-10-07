@@ -1,0 +1,13 @@
+
+> api@0.0.1 test
+> jest
+
+PASS src/app.controller.spec.ts (8.934 s)
+PASS src/lead.controller.spec.ts (10.935 s)
+PASS src/campaign.controller.spec.ts (10.925 s)
+
+Test Suites: 3 passed, 3 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        11.96 s, estimated 12 s
+Ran all test suites.

@@ -17,7 +17,8 @@ const AllLeads = () => {
   const [leads, setLeads] = useState<LeadType[]>([]); // State type definition
 
   useEffect(() => {
-    // Fetch leads from API (replace with actual API call)
+// @todo: Create an endpoint to fetch leads from the API
+// Fetch leads from API (replace with actual API call)
     const fetchLeads = async () => {
       // Example mock data
       const mockLeads: LeadType[] = [
