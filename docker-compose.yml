@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: replace_me
+      POSTGRES_PASSWORD: replace_me
+      POSTGRES_DB: replace_me
+    ports:
+      - '5432:5432'
+    volumes:
+      - supabase_data:/var/lib/postgresql/data
+
+  gotrue:
+    image: supabase/gotrue:latest
+    restart: always
+    environment:
+      API_EXTERNAL_URL: http://localhost:9999
+      DB_URI: postgres://replace_me:replace_me@postgres:5432/replace_me
+      JWT_SECRET: your_jwt_secret
+      SITE_URL: http://localhost:3000
+    ports:
+      - '9999:9999'
+    depends_on:
+      - postgres
+
+volumes:
+  supabase_data:
+
