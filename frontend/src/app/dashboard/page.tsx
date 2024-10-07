@@ -1,4 +1,6 @@
-import { useRouter } from 'next/router';
+"use client";
+
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { supabase } from '../../utils/supabaseClient';
 
@@ -7,11 +9,12 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const session = supabase.auth.session();
+      const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         router.push('/login');
       }
     };
+
     checkAuth();
   }, [router]);
 
