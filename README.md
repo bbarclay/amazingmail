@@ -10,7 +10,23 @@ AmazingMail is a cold email system that empowers users to manage and automate th
 
 ## Getting Started
 
-First, run the development server:
+First, set up your environment variables:
+
+1. In the `frontend` directory, create a `.env` file with the following content:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+2. In the `backend` directory, create a `.env` file with the following content:
+   ```
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   ```
+
+Replace the placeholder values with your actual Supabase project URL, anon key, and service role key.
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -44,3 +60,4 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+
