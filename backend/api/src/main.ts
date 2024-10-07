@@ -11,6 +11,21 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  
+  // Use the PORT environment variable provided by Vercel, or default to 3000
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
 }
-bootstrap();
+
+// For Vercel serverless deployment
+export default async function handler(req, res) {
+  const app = await NestFactory.create(AppModule);
+  await app.init();
+  const instance = app.getHttpAdapter().getInstance();
+  return instance(req, res);
+}
+
+// Only call bootstrap if we're not in a serverless environment
+if (process.env.NODE_ENV !== 'production') {
+  bootstrap();
+}
