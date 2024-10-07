@@ -1,65 +1,66 @@
+// src/app/login/page.tsx
+
 "use client";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../../utils/supabaseClient';
+import { useAuth } from '@/contexts/AuthContext';
 
-const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('test@example.com');
-  const [password, setPassword] = useState('password123');
-  const [errorMessage, setErrorMessage] = useState('');
+export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
+  const { login } = useAuth();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      console.log(data, error);
-      setErrorMessage('Invalid credentials. Please try again.');
-    } else {
-      // Store authentication state
-      localStorage.setItem('authenticated', 'true');
+    try {
+      await login(email, password);
       router.push('/dashboard');
+    } catch (error) {
+      console.error('Login failed:', error);
+      // TODO: Show error message to user
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form className="p-6 bg-white rounded shadow-md w-full max-w-sm" onSubmit={handleLogin}>
-        <h2 className="mb-4 text-2xl font-bold text-center">Login</h2>
-        {errorMessage && <p className="mb-4 text-red-500 text-sm text-center">{errorMessage}</p>}
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-            required
-          />
-        </div>
-        <button 
-          type="submit" 
-          className="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition duration-200"
-        >
-          Login
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="px-8 py-6 mt-4 text-left bg-white dark:bg-gray-800 shadow-lg">
+        <h3 className="text-2xl font-bold text-center">Login to your account</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="mt-4">
+            <div>
+              <label className="block" htmlFor="email">Email</label>
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mt-4">
+              <label className="block">Password</label>
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex items-baseline justify-between">
+              <button className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900" type="submit">
+                Login
+              </button>
+              <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
-export default LoginPage;
