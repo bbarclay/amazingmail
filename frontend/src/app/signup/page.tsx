@@ -11,31 +11,67 @@ const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setError('Passwords do not match');
+      setLoading(false);
       return;
     }
 
-    // Add basic validation for the email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      alert('Please enter a valid email address');
+      setError('Please enter a valid email address');
+      setLoading(false);
       return;
     }
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+          },
+        },
+      });
 
-    if (error) {
-      alert(error.message);
-    } else {
-      router.push('/dashboard');
+      if (error) throw error;
+
+      if (data) {
+        // Insert additional user data into the users table
+        const { error: profileError } = await supabase
+          .from('users')
+          .insert([
+            {
+              id: data.user.id,
+              email: email,
+              first_name: firstName,
+              last_name: lastName,
+            },
+          ]);
+
+        if (profileError) throw profileError;
+
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unexpected error occurred');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,6 +115,7 @@ const SignUpPage: React.FC = () => {
           </div>
           {/* Form */}
           <form onSubmit={handleSignUp}>
+            {error && <div className="text-red-500 mb-4">{error}</div>}
             <div className="mb-4">
               <label htmlFor="firstName" className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1">First Name</label>
               <input
@@ -137,8 +174,9 @@ const SignUpPage: React.FC = () => {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg mt-4 hover:bg-blue-700 transition duration-200"
+              disabled={loading}
             >
-              Sign Up
+              {loading ? 'Signing Up...' : 'Sign Up'}
             </button>
           </form>
           <p className="text-center text-bgray-900 dark:text-bgray-50 text-base font-medium pt-7">
@@ -156,3 +194,4 @@ const SignUpPage: React.FC = () => {
 };
 
 export default SignUpPage;
+

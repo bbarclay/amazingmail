@@ -2,3 +2,7 @@
 .aider.input.history
 .aider.chat.history.md
 .aider*
+
+env.local
+.env
+
