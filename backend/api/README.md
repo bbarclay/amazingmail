@@ -1,85 +1,165 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# AmazingMail Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+![AmazingMail Logo](../../readme_files/logo.png)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+[![NestJS](https://img.shields.io/badge/NestJS-9.0+-E0234E.svg)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.5+-3178C6.svg)](https://www.typescriptlang.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-1.0+-3ECF8E.svg)](https://supabase.io/)
+[![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED.svg)](https://www.docker.com/)
 
-## Description
+Welcome to the backend API repository of AmazingMail, a powerful cold email system built with NestJS. This repository contains the server-side logic, database interactions, and API endpoints that power our email marketing platform.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Features
 
-## Project setup
+- 📧 **Email Campaign Management**: Create, update, and manage email campaigns.
+- 📋 **Template Management**: Store and retrieve email templates.
+- 📈 **Analytics Processing**: Collect and process campaign performance data.
+- 🔒 **Authentication & Authorization**: Secure user authentication and role-based access control.
+- 🌐 **Integration with Email Services**: Connect with various email sending providers.
+- 💾 **Database Management**: Efficient data storage and retrieval using Supabase.
+- 💬 **Webhook Handling**: Process incoming webhooks for email events.
 
-```bash
-$ npm install
+## 🛠 Tech Stack
+
+- **Framework**: [NestJS](https://nestjs.com/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Database**: [Supabase](https://supabase.io/) (PostgreSQL)
+- **ORM**: [TypeORM](https://typeorm.io/)
+- **Authentication**: [Passport.js](http://www.passportjs.org/)
+- **Testing**: [Jest](https://jestjs.io/)
+- **Documentation**: [Swagger](https://swagger.io/)
+- **Containerization**: [Docker](https://www.docker.com/)
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+- Node.js 14.0 or later
+- npm or yarn
+- Docker (optional, for containerization)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/amazingmail/backend-api.git
+   cd backend-api
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Set up environment variables:
+   Create a `.env` file in the root directory and add the following:
+   ```env
+   DATABASE_URL=your_supabase_database_url
+   JWT_SECRET=your_jwt_secret
+   SMTP_HOST=your_smtp_host
+   SMTP_PORT=your_smtp_port
+   SMTP_USER=your_smtp_username
+   SMTP_PASS=your_smtp_password
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run start:dev
+   # or
+   yarn start:dev
+   ```
+
+5. The API will be available at `http://localhost:3000`.
+
+## 📁 Project Structure
+
+```
+/
+├── src/
+│   ├── campaigns/     # Campaign-related modules and services
+│   ├── templates/     # Email template management
+│   ├── analytics/     # Analytics processing and reporting
+│   ├── auth/          # Authentication and authorization
+│   ├── integrations/  # Third-party service integrations
+│   ├── database/      # Database configurations and migrations
+│   └── common/        # Shared utilities and interfaces
+├── test/             # Test files
+├── docs/             # API documentation
+└── docker/           # Docker configurations
 ```
 
-## Compile and run the project
+## 🧪 Running Tests
+
+To run the test suite:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run test
+# or
+yarn test
 ```
 
-## Run tests
+For e2e tests:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run test:e2e
+# or
+yarn test:e2e
 ```
 
-## Resources
+## 📊 API Documentation
 
-Check out a few resources that may come in handy when working with NestJS:
+API documentation is automatically generated using Swagger. After starting the development server, you can access the Swagger UI at:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```
+http://localhost:3000/api
+```
 
-## Support
+## 📦 Deployment
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Using Docker
 
-## Stay in touch
+1. Build the Docker image:
+   ```bash
+   docker build -t amazingmail-api .
+   ```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+2. Run the container:
+   ```bash
+   docker run -p 3000:3000 amazingmail-api
+   ```
 
-## License
+### Traditional Deployment
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+1. Build the project:
+   ```bash
+   npm run build
+   # or
+   yarn build
+   ```
+
+2. Start the production server:
+   ```bash
+   npm run start:prod
+   # or
+   yarn start:prod
+   ```
+
+## 🤝 Contributing
+
+We welcome contributions to AmazingMail's backend API! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgements
+
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [Supabase Documentation](https://supabase.io/docs)
+- [TypeORM Documentation](https://typeorm.io/)
+
+---
+
+Built with ❤️ by the AmazingMail Team

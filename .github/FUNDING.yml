@@ -1,0 +1,8 @@
+# GitHub Sponsorship Configuration
+
+github: bbarclay
+patreon: your-patreon-username
+open_collective: your-opencollective-username
+ko_fi: your-kofi-username
+tidelift: npm/bbarclay/amazingmail
+custom: ['https://your-custom-donation-link']
