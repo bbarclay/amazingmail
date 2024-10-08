@@ -5,6 +5,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { PasswordResetDto } from './dto/password-reset.dto';
 import { UnauthorizedException } from '@nestjs/common';
+import { User } from '../user/user.entity';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -37,12 +38,10 @@ describe('AuthController', () => {
     it('should register a new user', async () => {
       const registerDto: RegisterDto = {
         email: 'test@example.com',
-        password: 'password123',
-        firstName: 'John',
-        lastName: 'Doe',
+        password: 'password123'
       };
-      const mockUser = { id: 1, ...registerDto };
-      jest.spyOn(authService, 'register').mockResolvedValue(mockUser);
+      const mockUser: Partial<User> = { id: 1, email: registerDto.email };
+      jest.spyOn(authService, 'register').mockResolvedValue(mockUser as User);
 
       const result = await controller.register(registerDto);
 
@@ -98,3 +97,4 @@ describe('AuthController', () => {
     });
   });
 });
+
