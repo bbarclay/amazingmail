@@ -2,25 +2,25 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/api/**/*.ts",
-      "use": "@vercel/node"
-    },
-    {
       "src": "frontend/package.json",
       "use": "@vercel/next",
       "config": {
         "distDir": "frontend/.next"
       }
+    },
+    {
+      "src": "backend/api/src/main.ts",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/api/$1"
+      "dest": "/backend/api/src/main.ts"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/$1"
+      "dest": "/frontend/$1"
     }
   ]
 }
