@@ -75,6 +75,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         ]);
 
       if (profileError) throw profileError;
+
+      // Automatically log in the user after successful registration
+      await login(email, password);
     }
   };
 
