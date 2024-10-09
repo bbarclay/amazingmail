@@ -25,7 +25,6 @@ const SignUpPage: React.FC = () => {
     }
   }, [isAuthenticated, router]);
 
-<<<<<<< HEAD
   useEffect(() => {
     // Autofill functionality
     const autofillData = localStorage.getItem('signupAutofill');
@@ -37,8 +36,6 @@ const SignUpPage: React.FC = () => {
     }
   }, []);
 
-=======
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -57,12 +54,7 @@ const SignUpPage: React.FC = () => {
       return;
     }
 
-<<<<<<< HEAD
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-=======
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
     if (!passwordRegex.test(password)) {
       setError(
         'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character'
@@ -73,14 +65,11 @@ const SignUpPage: React.FC = () => {
 
     try {
       await register(email, password, firstName, lastName);
-<<<<<<< HEAD
       // Save autofill data
       localStorage.setItem(
         'signupAutofill',
         JSON.stringify({ firstName, lastName, email })
       );
-=======
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -143,7 +132,6 @@ const SignUpPage: React.FC = () => {
               Send, spend and save smarter
             </p>
           </header>
-<<<<<<< HEAD
           {/* Google & Apple Button */}
           <div className="flex flex-col md:flex-row gap-4">
             <button className="inline-flex justify-center items-center gap-x-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg px-6 py-4 text-base text-bgray-900 dark:text-white font-medium">
@@ -153,39 +141,16 @@ const SignUpPage: React.FC = () => {
                 height={22}
                 alt="Google Icon"
               />
-              <span> Sign Up with Google </span>
-            </button>
-            <button className="inline-flex justify-center items-center gap-x-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg px-6 py-4 text-base text-bgray-900 dark:text-white font-medium">
-              <Image
-                src="/assets/images/apple-icon.svg"
-                width={21}
-                height={22}
-                alt="Apple Icon"
-              />
-              <span> Sign Up with Apple </span>
+              <span>Sign Up with Google</span>
             </button>
           </div>
-          <div className="relative mt-6 mb-5">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-darkblack-400"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-white dark:bg-darkblack-500 px-2 text-base text-bgray-600">
-                Or continue with
-              </span>
-            </div>
+          <div className="relative border-b border-bgray-300 dark:border-darkblack-400 mt-6 mb-5">
+            <p className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 bg-white dark:bg-darkblack-500 text-center text-sm font-medium text-bgray-600 dark:text-darkblack-300">
+              Or continue with
+            </p>
           </div>
-          {/* Form */}
-          <form onSubmit={handleSignUp} noValidate>
-            {error && (
-              <div
-                className="text-red-500 mb-4"
-                role="alert"
-                aria-live="assertive"
-              >
-                {error}
-              </div>
-            )}
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <form onSubmit={handleSignUp}>
             <div className="mb-4">
               <label
                 htmlFor="firstName"
@@ -198,18 +163,6 @@ const SignUpPage: React.FC = () => {
                 id="firstName"
                 name="firstName"
                 autoComplete="given-name"
-=======
-          {error && (
-            <div className="p-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
-              {error}
-            </div>
-          )}
-          <form onSubmit={handleSignUp}>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">First Name</label>
-              <input
-                type="text"
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 className="w-full p-2 mt-1 border rounded"
@@ -217,7 +170,6 @@ const SignUpPage: React.FC = () => {
               />
             </div>
             <div className="mb-4">
-<<<<<<< HEAD
               <label
                 htmlFor="lastName"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -229,11 +181,6 @@ const SignUpPage: React.FC = () => {
                 id="lastName"
                 name="lastName"
                 autoComplete="family-name"
-=======
-              <label className="block text-sm font-medium text-gray-700">Last Name</label>
-              <input
-                type="text"
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 className="w-full p-2 mt-1 border rounded"
@@ -241,7 +188,6 @@ const SignUpPage: React.FC = () => {
               />
             </div>
             <div className="mb-4">
-<<<<<<< HEAD
               <label
                 htmlFor="email"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -253,11 +199,6 @@ const SignUpPage: React.FC = () => {
                 id="email"
                 name="email"
                 autoComplete="email"
-=======
-              <label className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                type="email"
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-2 mt-1 border rounded"
@@ -265,7 +206,6 @@ const SignUpPage: React.FC = () => {
               />
             </div>
             <div className="mb-4">
-<<<<<<< HEAD
               <label
                 htmlFor="password"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -277,11 +217,6 @@ const SignUpPage: React.FC = () => {
                 id="password"
                 name="password"
                 autoComplete="new-password"
-=======
-              <label className="block text-sm font-medium text-gray-700">Password</label>
-              <input
-                type="password"
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full p-2 mt-1 border rounded"
@@ -302,7 +237,6 @@ const SignUpPage: React.FC = () => {
               )}
             </div>
             <div className="mb-4">
-<<<<<<< HEAD
               <label
                 htmlFor="confirmPassword"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -314,11 +248,6 @@ const SignUpPage: React.FC = () => {
                 id="confirmPassword"
                 name="confirmPassword"
                 autoComplete="new-password"
-=======
-              <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
-              <input
-                type="password"
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full p-2 mt-1 border rounded"
@@ -329,7 +258,6 @@ const SignUpPage: React.FC = () => {
               {loading ? <ClipLoader size={20} color={"#ffffff"} /> : "Sign Up"}
             </button>
           </form>
-<<<<<<< HEAD
           <p className="text-center text-bgray-900 dark:text-bgray-50 text-base font-medium pt-7">
             Already have an account?
             <Link href="/login" className="font-semibold underline">
@@ -356,15 +284,10 @@ const SignUpPage: React.FC = () => {
           Join our platform and discover a world of possibilities. Sign up now
           to access exclusive features and start your journey towards success.
         </p>
-=======
-        </div>
-      </div>
-      <div className="hidden lg:flex lg:w-1/2 bg-gray-100 dark:bg-gray-800">
-        {/* Add any additional content or images for the right section */}
->>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
       </div>
     </div>
   );
 };
 
 export default SignUpPage;
+
