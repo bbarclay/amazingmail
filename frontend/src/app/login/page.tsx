@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [remember, setRemember] = useState(false);
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, socialLogin } = useAuth();
 
   const validateInputs = () => {
     if (!email) {
@@ -58,15 +58,17 @@ export default function LoginPage() {
     }
   };
 
-  const handleSocialLogin = (provider: string) => {
-    // Implement social login logic here
-    console.log(`Logging in with ${provider}`);
+  const handleSocialLogin = async (provider: 'google' | 'linkedin') => {
+    try {
+      await socialLogin(provider);
+      router.push('/dashboard');
+    } catch (error) {
+      console.error(`${provider} login failed:`, error);
+      setError(`${provider} login failed. Please try again.`);
+    }
   };
 
   const handleForgotPassword = () => {
-    // Implement forgot password logic here
-    console.log('Forgot password clicked');
-    // You would typically redirect to a password reset page or show a modal
     router.push('/forgot-password');
   };
 
@@ -176,7 +178,7 @@ export default function LoginPage() {
 
         <div className="flex justify-between mb-8">
           <button
-            onClick={() => handleSocialLogin('Google')}
+            onClick={() => handleSocialLogin('google')}
             className="inline-flex justify-center items-center gap-x-2 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-base text-gray-800 dark:text-white font-medium"
             aria-label="Login with Google"
           >
@@ -184,7 +186,7 @@ export default function LoginPage() {
             Sign In with Google
           </button>
           <button
-            onClick={() => handleSocialLogin('LinkedIn')}
+            onClick={() => handleSocialLogin('linkedin')}
             className="inline-flex justify-center items-center gap-x-2 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-base text-gray-800 dark:text-white font-medium"
             aria-label="Login with LinkedIn"
           >

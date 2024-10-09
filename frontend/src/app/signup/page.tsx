@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { supabase } from '../../utils/supabaseClient';
+import { useAuth } from '@/contexts/AuthContext';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const SignUpPage: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -14,6 +15,7 @@ const SignUpPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const { register } = useAuth();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,39 +35,17 @@ const SignUpPage: React.FC = () => {
       return;
     }
 
+    // Password strength validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-          },
-        },
-      });
-
-      if (error) throw error;
-
-      if (data && data.user) {
-        // Insert additional user data into the users table
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert([
-            {
-              id: data.user.id,
-              email: email,
-              first_name: firstName,
-              last_name: lastName,
-            },
-          ]);
-
-        if (profileError) throw profileError;
-
-        router.push('/dashboard');
-      } else {
-        throw new Error('User data is missing after signup');
-      }
+      await register(email, password, firstName, lastName);
+      router.push('/dashboard');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -175,10 +155,10 @@ const SignUpPage: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg mt-4 hover:bg-blue-700 transition duration-200"
+              className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg mt-4 hover:bg-blue-700 transition duration-200 flex items-center justify-center"
               disabled={loading}
             >
-              {loading ? 'Signing Up...' : 'Sign Up'}
+              {loading ? <ClipLoader size={20} color="#ffffff" /> : 'Sign Up'}
             </button>
           </form>
           <p className="text-center text-bgray-900 dark:text-bgray-50 text-base font-medium pt-7">
@@ -190,6 +170,11 @@ const SignUpPage: React.FC = () => {
       {/* Right Section */}
       <div className="lg:w-1/2 lg:block hidden bg-[#F6FAFF] dark:bg-darkblack-600 p-20 relative">
         {/* Illustration and content */}
+        <Image src="/assets/images/illustration/signup.svg" width={500} height={500} alt="Sign Up Illustration" className="mx-auto" />
+        <h3 className="text-bgray-900 dark:text-white font-semibold text-4xl mb-4 text-center">Start Your Journey with Us</h3>
+        <p className="text-bgray-600 dark:text-bgray-50 text-sm font-medium text-center">
+          Join our platform and discover a world of possibilities. Sign up now to access exclusive features and start your journey towards success.
+        </p>
       </div>
     </div>
   );
