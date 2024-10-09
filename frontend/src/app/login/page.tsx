@@ -1,8 +1,6 @@
-// src/app/login/page.tsx
-
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { FaGoogle, FaLinkedin } from 'react-icons/fa';
@@ -15,8 +13,19 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [remember, setRemember] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState('');
   const router = useRouter();
   const { login, socialLogin } = useAuth();
+
+  useEffect(() => {
+    // Autofill functionality
+    const autofillData = localStorage.getItem('loginAutofill');
+    if (autofillData) {
+      const { email, remember } = JSON.parse(autofillData);
+      setEmail(email || '');
+      setRemember(remember || false);
+    }
+  }, []);
 
   const validateInputs = () => {
     if (!email) {
@@ -49,6 +58,12 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password);
+      // Save autofill data
+      if (remember) {
+        localStorage.setItem('loginAutofill', JSON.stringify({ email, remember }));
+      } else {
+        localStorage.removeItem('loginAutofill');
+      }
       router.push('/dashboard');
     } catch (error: unknown) {
       console.error('Login failed:', error);
@@ -85,7 +100,9 @@ export default function LoginPage() {
     }
   };
 
-  const passwordStrength = getPasswordStrength(password);
+  useEffect(() => {
+    setPasswordStrength(getPasswordStrength(password));
+  }, [password]);
 
   return (
     <section className="flex flex-col lg:flex-row min-h-screen bg-gray-100 dark:bg-gray-800">
