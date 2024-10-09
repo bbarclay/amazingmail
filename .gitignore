@@ -48,3 +48,6 @@ files_to_remove.txt
 .aider.input.history
 .aider.chat.history.md
 
+env.local
+.env
+
