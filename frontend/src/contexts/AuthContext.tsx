@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import { supabase } from '../lib/supabaseClient';
 import { User, Session, Provider } from '@supabase/supabase-js';
 
 interface AuthContextType {
@@ -19,97 +18,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const fetchSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      setIsAuthenticated(!!session?.user);
-    };
-
-    fetchSession();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event: string, session: Session | null) => {
-        setUser(session?.user ?? null);
-        setIsAuthenticated(!!session?.user);
-      }
-    );
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
+    // Check for existing session (you may need to implement this)
   }, []);
 
   const login = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
+    const response = await fetch('/auth/v1/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) throw new Error('Login failed');
+    const data = await response.json();
+    setUser(data.user);
+    setIsAuthenticated(true);
   };
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    await fetch('/auth/v1/logout', { method: 'POST' });
+    setUser(null);
+    setIsAuthenticated(false);
   };
 
-const register = async (email: string, password: string, firstName: string, lastName: string) => {
-    console.log('Starting registration process', { email, firstName, lastName });
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-          },
-        },
-      });
-      if (error) {
-        console.error('Registration error:', error);
-        throw error;
-      }
-
-      console.log('Registration successful:', data);
-
-      if (data && data.user) {
-        console.log('Creating user profile');
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert([
-            {
-              id: data.user.id,
-              email: email,
-              first_name: firstName,
-              last_name: lastName,
-            },
-          ]);
-
-        if (profileError) {
-          console.error('Profile creation error:', profileError);
-          throw profileError;
-        }
-
-        console.log('Profile created successfully');
-
-        // Automatically log in the user after successful registration
-        console.log('Attempting automatic login');
-        await login(email, password);
-        console.log('Automatic login successful');
-      } else {
-        console.error('User data not available after registration');
-      }
-    } catch (error) {
-      console.error('Unexpected error during registration:', error);
-      throw error;
-    }
+  const register = async (email: string, password: string, firstName: string, lastName: string) => {
+    const response = await fetch('/auth/v1/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, firstName, lastName }),
+    });
+    if (!response.ok) throw new Error('Registration failed');
+    const data = await response.json();
+    setUser(data.user);
+    setIsAuthenticated(true);
   };
 
   const resetPassword = async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) throw error;
+    const response = await fetch('/auth/v1/password-reset', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    if (!response.ok) throw new Error('Password reset failed');
   };
 
   const socialLogin = async (provider: Provider) => {
-    const { error } = await supabase.auth.signInWithOAuth({ provider });
-    if (error) throw error;
+    // Implement social login if needed
   };
 
   return (
@@ -126,4 +78,3 @@ export function useAuth() {
   }
   return context;
 }
-
