@@ -50,48 +50,55 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
 const register = async (email: string, password: string, firstName: string, lastName: string) => {
-    console.log('Starting registration process');
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName,
-        },
-      },
-    });
-    if (error) {
-      console.error('Registration error:', error);
-      throw error;
-    }
-
-    console.log('Registration successful:', data);
-
-    if (data && data.user) {
-      console.log('Creating user profile');
-      const { error: profileError } = await supabase
-        .from('users')
-        .insert([
-          {
-            id: data.user.id,
-            email: email,
+    console.log('Starting registration process', { email, firstName, lastName });
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
             first_name: firstName,
             last_name: lastName,
           },
-        ]);
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        throw profileError;
+        },
+      });
+      if (error) {
+        console.error('Registration error:', error);
+        throw error;
       }
 
-      console.log('Profile created successfully');
+      console.log('Registration successful:', data);
 
-      // Automatically log in the user after successful registration
-      console.log('Attempting automatic login');
-      await login(email, password);
-      console.log('Automatic login successful');
+      if (data && data.user) {
+        console.log('Creating user profile');
+        const { error: profileError } = await supabase
+          .from('users')
+          .insert([
+            {
+              id: data.user.id,
+              email: email,
+              first_name: firstName,
+              last_name: lastName,
+            },
+          ]);
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          throw profileError;
+        }
+
+        console.log('Profile created successfully');
+
+        // Automatically log in the user after successful registration
+        console.log('Attempting automatic login');
+        await login(email, password);
+        console.log('Automatic login successful');
+      } else {
+        console.error('User data not available after registration');
+      }
+    } catch (error) {
+      console.error('Unexpected error during registration:', error);
+      throw error;
     }
   };
 

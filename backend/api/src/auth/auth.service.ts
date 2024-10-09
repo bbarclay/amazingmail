@@ -18,18 +18,42 @@ export class AuthService {
     );
   }
 
-  async register(registerDto: RegisterDto): Promise<any> {
+async register(registerDto: RegisterDto): Promise<any> {
     const sanitizedDto = plainToClass(RegisterDto, registerDto);
     sanitize(sanitizedDto);
-    const { email, password } = sanitizedDto;
+    const { email, password, firstName, lastName } = sanitizedDto;
 
     const { data, error } = await this.supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+        },
+      },
     });
 
     if (error) {
       throw new BadRequestException(error.message);
+    }
+
+    // Create a profile in the 'users' table
+    if (data.user) {
+      const { error: profileError } = await this.supabase
+        .from('users')
+        .insert([
+          {
+            id: data.user.id,
+            email: email,
+            first_name: firstName,
+            last_name: lastName,
+          },
+        ]);
+
+      if (profileError) {
+        throw new BadRequestException(profileError.message);
+      }
     }
 
     return data;
