@@ -14,13 +14,13 @@ function RootLayoutContent({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isAuthenticated && pathname !== '/login') {
+useEffect(() => {
+    if (!isAuthenticated && !['/login', '/signup'].includes(pathname)) {
       router.push('/login');
     }
   }, [isAuthenticated, pathname, router]);
 
-  if (!isAuthenticated && pathname !== '/login') {
+  if (!isAuthenticated && !['/login', '/signup'].includes(pathname)) {
     return null;
   }
 

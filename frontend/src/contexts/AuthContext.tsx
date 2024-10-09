@@ -49,7 +49,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) throw error;
   };
 
-  const register = async (email: string, password: string, firstName: string, lastName: string) => {
+const register = async (email: string, password: string, firstName: string, lastName: string) => {
+    console.log('Starting registration process');
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -60,9 +61,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         },
       },
     });
-    if (error) throw error;
+    if (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
+
+    console.log('Registration successful:', data);
 
     if (data && data.user) {
+      console.log('Creating user profile');
       const { error: profileError } = await supabase
         .from('users')
         .insert([
@@ -74,10 +81,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           },
         ]);
 
-      if (profileError) throw profileError;
+      if (profileError) {
+        console.error('Profile creation error:', profileError);
+        throw profileError;
+      }
+
+      console.log('Profile created successfully');
 
       // Automatically log in the user after successful registration
+      console.log('Attempting automatic login');
       await login(email, password);
+      console.log('Automatic login successful');
     }
   };
 

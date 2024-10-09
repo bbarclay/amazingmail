@@ -17,20 +17,24 @@ const SignUpPage: React.FC = () => {
   const router = useRouter();
   const { register, isAuthenticated } = useAuth();
 
-  useEffect(() => {
+useEffect(() => {
+    console.log('isAuthenticated changed:', isAuthenticated);
     if (isAuthenticated) {
+      console.log('Redirecting to dashboard');
       router.push('/dashboard');
     }
   }, [isAuthenticated, router]);
 
-  const handleSignUp = async (e: React.FormEvent) => {
+const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    console.log('Starting signup process');
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
+      console.log('Signup failed: Passwords do not match');
       return;
     }
 
@@ -38,6 +42,7 @@ const SignUpPage: React.FC = () => {
     if (!emailRegex.test(email)) {
       setError('Please enter a valid email address');
       setLoading(false);
+      console.log('Signup failed: Invalid email');
       return;
     }
 
@@ -46,13 +51,17 @@ const SignUpPage: React.FC = () => {
     if (!passwordRegex.test(password)) {
       setError('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character');
       setLoading(false);
+      console.log('Signup failed: Password does not meet requirements');
       return;
     }
 
     try {
+      console.log('Calling register function');
       await register(email, password, firstName, lastName);
+      console.log('Registration successful');
       // The router.push is now handled in the useEffect hook
     } catch (error) {
+      console.error('Registration error:', error);
       if (error instanceof Error) {
         setError(error.message);
       } else {
@@ -60,6 +69,7 @@ const SignUpPage: React.FC = () => {
       }
     } finally {
       setLoading(false);
+      console.log('Signup process completed');
     }
   };
 
