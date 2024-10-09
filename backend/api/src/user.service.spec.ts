@@ -53,11 +53,11 @@ describe('UserService', () => {
       const userId = 'test-user-id';
       const imageBuffer = Buffer.from('test-image');
       const filename = 'test-image.jpg';
-      const mockUser = { id: userId, profileImageUrl: '' };
+      const mockUser = { id: userId, imageUrl: '' };
       const mockS3Response = { Location: 'https://test-bucket.s3.amazonaws.com/test-image.jpg' };
 
       const userRepositoryFindOne = jest.spyOn(service['userRepository'], 'findOne').mockResolvedValue(mockUser);
-      const userRepositorySave = jest.spyOn(service['userRepository'], 'save').mockResolvedValue({ ...mockUser, profileImageUrl: mockS3Response.Location });
+      const userRepositorySave = jest.spyOn(service['userRepository'], 'save').mockResolvedValue({ ...mockUser, imageUrl: mockS3Response.Location });
       mockConfigService.get.mockReturnValue('test-bucket');
       mockS3.promise.mockResolvedValue(mockS3Response);
 
@@ -71,8 +71,8 @@ describe('UserService', () => {
         ContentType: 'image/jpeg',
         ACL: 'public-read'
       });
-      expect(userRepositorySave).toHaveBeenCalledWith({ ...mockUser, profileImageUrl: mockS3Response.Location });
-      expect(result.profileImageUrl).toBe(mockS3Response.Location);
+      expect(userRepositorySave).toHaveBeenCalledWith({ ...mockUser, imageUrl: mockS3Response.Location });
+      expect(result.imageUrl).toBe(mockS3Response.Location);
     });
 
     it('should throw an error if user is not found', async () => {
@@ -89,7 +89,7 @@ describe('UserService', () => {
       const userId = 'test-user-id';
       const imageBuffer = Buffer.from('test-image');
       const filename = 'test-image.jpg';
-      const mockUser = { id: userId, profileImageUrl: '' };
+      const mockUser = { id: userId, imageUrl: '' };
 
       jest.spyOn(service['userRepository'], 'findOne').mockResolvedValue(mockUser);
       mockConfigService.get.mockReturnValue('test-bucket');
