@@ -25,6 +25,7 @@ const SignUpPage: React.FC = () => {
     }
   }, [isAuthenticated, router]);
 
+<<<<<<< HEAD
   useEffect(() => {
     // Autofill functionality
     const autofillData = localStorage.getItem('signupAutofill');
@@ -36,6 +37,8 @@ const SignUpPage: React.FC = () => {
     }
   }, []);
 
+=======
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -54,8 +57,12 @@ const SignUpPage: React.FC = () => {
       return;
     }
 
+<<<<<<< HEAD
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+=======
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
     if (!passwordRegex.test(password)) {
       setError(
         'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character'
@@ -66,13 +73,15 @@ const SignUpPage: React.FC = () => {
 
     try {
       await register(email, password, firstName, lastName);
+<<<<<<< HEAD
       // Save autofill data
       localStorage.setItem(
         'signupAutofill',
         JSON.stringify({ firstName, lastName, email })
       );
+=======
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
     } catch (error) {
-      console.error('Registration error:', error);
       if (error instanceof Error) {
         setError(error.message);
       } else {
@@ -106,7 +115,6 @@ const SignUpPage: React.FC = () => {
 
   return (
     <div className="bg-white dark:bg-darkblack-500 flex flex-col lg:flex-row justify-between min-h-screen">
-      {/* Left Section */}
       <div className="lg:w-1/2 px-5 xl:pl-12 pt-10">
         <header>
           <Link href="/" className="">
@@ -135,6 +143,7 @@ const SignUpPage: React.FC = () => {
               Send, spend and save smarter
             </p>
           </header>
+<<<<<<< HEAD
           {/* Google & Apple Button */}
           <div className="flex flex-col md:flex-row gap-4">
             <button className="inline-flex justify-center items-center gap-x-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg px-6 py-4 text-base text-bgray-900 dark:text-white font-medium">
@@ -189,13 +198,26 @@ const SignUpPage: React.FC = () => {
                 id="firstName"
                 name="firstName"
                 autoComplete="given-name"
+=======
+          {error && (
+            <div className="p-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
+              {error}
+            </div>
+          )}
+          <form onSubmit={handleSignUp}>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">First Name</label>
+              <input
+                type="text"
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="w-full p-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg"
+                className="w-full p-2 mt-1 border rounded"
                 required
               />
             </div>
             <div className="mb-4">
+<<<<<<< HEAD
               <label
                 htmlFor="lastName"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -207,13 +229,19 @@ const SignUpPage: React.FC = () => {
                 id="lastName"
                 name="lastName"
                 autoComplete="family-name"
+=======
+              <label className="block text-sm font-medium text-gray-700">Last Name</label>
+              <input
+                type="text"
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="w-full p-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg"
+                className="w-full p-2 mt-1 border rounded"
                 required
               />
             </div>
             <div className="mb-4">
+<<<<<<< HEAD
               <label
                 htmlFor="email"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -225,13 +253,19 @@ const SignUpPage: React.FC = () => {
                 id="email"
                 name="email"
                 autoComplete="email"
+=======
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+                type="email"
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg"
+                className="w-full p-2 mt-1 border rounded"
                 required
               />
             </div>
             <div className="mb-4">
+<<<<<<< HEAD
               <label
                 htmlFor="password"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -243,9 +277,14 @@ const SignUpPage: React.FC = () => {
                 id="password"
                 name="password"
                 autoComplete="new-password"
+=======
+              <label className="block text-sm font-medium text-gray-700">Password</label>
+              <input
+                type="password"
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg"
+                className="w-full p-2 mt-1 border rounded"
                 required
               />
               {password && (
@@ -263,6 +302,7 @@ const SignUpPage: React.FC = () => {
               )}
             </div>
             <div className="mb-4">
+<<<<<<< HEAD
               <label
                 htmlFor="confirmPassword"
                 className="block text-bgray-600 dark:text-darkblack-300 font-medium mb-1"
@@ -274,20 +314,22 @@ const SignUpPage: React.FC = () => {
                 id="confirmPassword"
                 name="confirmPassword"
                 autoComplete="new-password"
+=======
+              <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+              <input
+                type="password"
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-2 border border-bgray-300 dark:border-darkblack-400 rounded-lg"
+                className="w-full p-2 mt-1 border rounded"
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg mt-4 hover:bg-blue-700 transition duration-200 flex items-center justify-center"
-              disabled={loading}
-            >
-              {loading ? <ClipLoader size={20} color="#ffffff" /> : 'Sign Up'}
+            <button type="submit" className="w-full p-2 text-white bg-blue-600 rounded">
+              {loading ? <ClipLoader size={20} color={"#ffffff"} /> : "Sign Up"}
             </button>
           </form>
+<<<<<<< HEAD
           <p className="text-center text-bgray-900 dark:text-bgray-50 text-base font-medium pt-7">
             Already have an account?
             <Link href="/login" className="font-semibold underline">
@@ -314,6 +356,12 @@ const SignUpPage: React.FC = () => {
           Join our platform and discover a world of possibilities. Sign up now
           to access exclusive features and start your journey towards success.
         </p>
+=======
+        </div>
+      </div>
+      <div className="hidden lg:flex lg:w-1/2 bg-gray-100 dark:bg-gray-800">
+        {/* Add any additional content or images for the right section */}
+>>>>>>> 7418f69ac092416f724b3b493179a89a1243271a
       </div>
     </div>
   );
