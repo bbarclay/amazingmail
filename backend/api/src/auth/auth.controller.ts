@@ -14,7 +14,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { PasswordResetDto } from './dto/password-reset.dto';
-// import { Throttle } from '@nestjs/throttler';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('v1/auth')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -22,32 +22,34 @@ import { PasswordResetDto } from './dto/password-reset.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('register')
-  // @Throttle(5, 60) // Throttling: 5 requests per 60 seconds
-  @HttpCode(HttpStatus.CREATED) // Returns 201 status code
+  @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 201, description: 'User registered successfully.' })
   async register(@Body() registerDto: RegisterDto) {
-    const user = await this.authService.register(registerDto);
-    return { message: 'User registered successfully', user };
+    const data = await this.authService.register(registerDto);
+    return { message: 'User registered successfully', data };
   }
 
+  @Public()
   @Post('login')
-  // @Throttle(10, 60) // Throttling: 10 requests per 60 seconds
-  @HttpCode(HttpStatus.OK) // Returns 200 status code
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: 200, description: 'Login successful.' })
   async login(@Body() loginDto: LoginDto) {
-    const token = await this.authService.login(loginDto);
-    if (!token) {
+    const data = await this.authService.login(loginDto);
+    if (!data) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    return { message: 'Login successful', access_token: token };
+    return { message: 'Login successful', data };
   }
 
+  @Public()
   @Put('password-reset')
-  @HttpCode(HttpStatus.OK) // Returns 200 status code
-  @ApiResponse({ status: 200, description: 'Password reset successful.' })
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: 200, description: 'Password reset email sent.' })
   async resetPassword(@Body() passwordResetDto: PasswordResetDto) {
     await this.authService.resetPassword(passwordResetDto);
-    return { message: 'Password reset successful' };
+    return { message: 'Password reset email sent' };
   }
 }
+

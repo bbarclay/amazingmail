@@ -11,21 +11,21 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+// Disable SSL certificate validation for development
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+const connectionString = process.env.POSTGRES_URL || 'postgres://postgres.dhqexsiedzedcbghkdzc:368doXSAQW2vGQlt@aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&supa=base-pooler.x';
+
 const ormconfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT, 10) || 5432,
-  username: process.env.DB_USER || 'myappuser',
-  password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_DATABASE || 'myappdb',
+  url: connectionString,
   entities: [User, Team, Payment, ApiKey, ConnectedAccount, Domain, Subscription],
-  synchronize: false, // Use migrations instead
+  synchronize: false,
   migrations: ['dist/migrations/**/*.js'],
   migrationsRun: false,
   logging: true,
-  cache: true,
-  extra: {
-    max: 10,
+  ssl: {
+    rejectUnauthorized: false
   },
 };
 

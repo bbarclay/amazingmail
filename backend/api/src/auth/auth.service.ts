@@ -1,67 +1,67 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
-import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
 import { PasswordResetDto } from './dto/password-reset.dto';
 import { plainToClass } from 'class-transformer';
 import { sanitize } from 'class-sanitizer';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>,
-    private jwtService: JwtService,
-  ) {}
+  private supabase: SupabaseClient;
 
-  async register(registerDto: RegisterDto): Promise<User> {
+  constructor(private configService: ConfigService) {
+    this.supabase = createClient(
+      this.configService.get<string>('SUPABASE_URL'),
+      this.configService.get<string>('SUPABASE_ANON_KEY')
+    );
+  }
+
+  async register(registerDto: RegisterDto): Promise<any> {
     const sanitizedDto = plainToClass(RegisterDto, registerDto);
     sanitize(sanitizedDto);
     const { email, password } = sanitizedDto;
 
-    const existingUser = await this.usersRepository.findOne({
-      where: { email },
-    });
-    if (existingUser) {
-      throw new BadRequestException('User already exists');
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = this.usersRepository.create({
+    const { data, error } = await this.supabase.auth.signUp({
       email,
-      password: hashedPassword,
+      password,
     });
-    return this.usersRepository.save(user);
+
+    if (error) {
+      throw new BadRequestException(error.message);
+    }
+
+    return data;
   }
 
-  async login(loginDto: LoginDto): Promise<string | null> {
+  async login(loginDto: LoginDto): Promise<any> {
     const sanitizedDto = plainToClass(LoginDto, loginDto);
     sanitize(sanitizedDto);
     const { email, password } = sanitizedDto;
 
-    const user = await this.usersRepository.findOne({ where: { email } });
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const payload = { email: user.email, sub: user.id };
-      return this.jwtService.sign(payload);
+    const { data, error } = await this.supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      throw new BadRequestException(error.message);
     }
-    return null;
+
+    return data;
   }
 
   async resetPassword(passwordResetDto: PasswordResetDto): Promise<void> {
     const sanitizedDto = plainToClass(PasswordResetDto, passwordResetDto);
     sanitize(sanitizedDto);
-    const { email, newPassword } = sanitizedDto;
+    const { email } = sanitizedDto;
 
-    const user = await this.usersRepository.findOne({ where: { email } });
-    if (user) {
-      user.password = await bcrypt.hash(newPassword, 10);
-      user.resetPasswordToken = null;
-      user.resetPasswordExpires = null;
-      await this.usersRepository.save(user);
-    } else {
-      throw new BadRequestException('User not found');
+    const { error } = await this.supabase.auth.resetPasswordForEmail(email);
+
+    if (error) {
+      throw new BadRequestException(error.message);
     }
   }
 }
+
