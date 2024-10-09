@@ -1,5 +1,7 @@
+'use client';
+
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import { User, Session, Provider } from '@supabase/supabase-js';
+import { User, Provider } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
@@ -61,7 +63,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const socialLogin = async (provider: Provider) => {
-    // Implement social login if needed
+    // TODO: Implement social login using the provider
+    console.log(`Social login with provider: ${provider}`);
+    throw new Error('Social login not implemented');
   };
 
   return (
