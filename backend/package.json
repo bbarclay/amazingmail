@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.0.0",
-    "vercel": "^29.0.0",
+    "vercel": "^29.4.0",
     "pg": "^8.7.1",
     "dotenv": "^16.0.3",
     "cross-env": "^7.0.3"
