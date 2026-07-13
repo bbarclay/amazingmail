@@ -33,6 +33,11 @@ const SettingsGrid = () => {
                     text-align: center;
                     background-color: #f9f9f9;
                     cursor: pointer;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }
+                .grid-item:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 }
             `}</style>
         </div>
